@@ -42,14 +42,10 @@ class FacebookSecondaryService extends BaseService implements SocialCardsContrac
      */
     public function publish(Cards $cards)
     {
-        if ($this->mediaCardsRepository->findByCardId($cards->id, 'facebook', 'secondary'))
-        {
+        if ($this->mediaCardsRepository->findByCardId($cards->id, 'facebook', 'secondary')) {
             throw new GeneralException(__('exceptions.backend.social.media.cards.repeated_error'));
-        }
-        else
-        {
-            try
-            {
+        } else {
+            try {
                 $this->getAccessToken();
                 $response = $this->facebook->post(
                     sprintf(
@@ -61,7 +57,7 @@ class FacebookSecondaryService extends BaseService implements SocialCardsContrac
                             'id' => $cards->id,
                         ]),
                         'source' => $this->facebook->fileToUpload($cards->images->first()->getPicture()),
-                    ],
+                    ]
                 );
 
                 return $this->mediaCardsRepository->create([
@@ -71,13 +67,9 @@ class FacebookSecondaryService extends BaseService implements SocialCardsContrac
                     'social_connections' => 'secondary',
                     'social_card_id' => $response->getGraphUser()->getId(),
                 ]);
-            }
-            catch (\Facebook\Exceptions\FacebookSDKException $e)
-            {
+            } catch (\Facebook\Exceptions\FacebookSDKException $e) {
                 \Log::error($e->getMessage());
-            }
-            catch (Exception $e)
-            {
+            } catch (Exception $e) {
                 \Log::error($e->getMessage());
             }
         }
@@ -89,10 +81,8 @@ class FacebookSecondaryService extends BaseService implements SocialCardsContrac
      */
     public function update(Cards $cards)
     {
-        if ($mediaCards = $this->mediaCardsRepository->findByCardId($cards->id, 'facebook', 'secondary'))
-        {
-            try
-            {
+        if ($mediaCards = $this->mediaCardsRepository->findByCardId($cards->id, 'facebook', 'secondary')) {
+            try {
                 $this->getAccessToken();
                 $response = $this->facebook->get(
                     sprintf(
@@ -106,13 +96,9 @@ class FacebookSecondaryService extends BaseService implements SocialCardsContrac
                     'num_like' => $this->slicerCardsLikes($decodedBody),
                     'num_share' => $this->slicerCardsShare($decodedBody),
                 ]);
-            }
-            catch (\Facebook\Exceptions\FacebookSDKException $e)
-            {
+            } catch (\Facebook\Exceptions\FacebookSDKException $e) {
                 \Log::error($e->getMessage());
-            }
-            catch (Exception $e)
-            {
+            } catch (Exception $e) {
                 \Log::error($e->getMessage());
             }
         }
@@ -128,10 +114,8 @@ class FacebookSecondaryService extends BaseService implements SocialCardsContrac
      */
     public function destory(User $user, Cards $cards, array $options)
     {
-        if ($mediaCards = $this->mediaCardsRepository->findByCardId($cards->id, 'facebook', 'secondary'))
-        {
-            try
-            {
+        if ($mediaCards = $this->mediaCardsRepository->findByCardId($cards->id, 'facebook', 'secondary')) {
+            try {
                 $this->getAccessToken();
                 $response = $this->facebook->delete(sprintf('/%s', $mediaCards->social_card_id));
                 $decodedBody = $response->getDecodedBody();
@@ -145,13 +129,9 @@ class FacebookSecondaryService extends BaseService implements SocialCardsContrac
                     'banned_remarks' => isset($options['remarks'])? $options['remarks'] : null,
                     'banned_at' => now(),
                 ]);
-            }
-            catch (\Facebook\Exceptions\FacebookSDKException $e)
-            {
+            } catch (\Facebook\Exceptions\FacebookSDKException $e) {
                 \Log::error($e->getMessage());
-            }
-            catch (Exception $e)
-            {
+            } catch (Exception $e) {
                 \Log::error($e->getMessage());
             }
         }
@@ -196,8 +176,7 @@ class FacebookSecondaryService extends BaseService implements SocialCardsContrac
      */
     private function getAccessToken()
     {
-        try
-        {
+        try {
             $facebookApp = new FacebookApp(
                 $this->facebook->getApp()->getId(),
                 $this->facebook->getApp()->getSecret()
@@ -214,13 +193,9 @@ class FacebookSecondaryService extends BaseService implements SocialCardsContrac
             $accessToken = $this->facebook->getClient()->sendRequest($facebookRequest)->getDecodedBody();
             $foreverPageAccessToken = $accessToken['access_token'];
             $this->facebook->setDefaultAccessToken($foreverPageAccessToken);
-        }
-        catch (\Facebook\Exceptions\FacebookSDKException $e)
-        {
+        } catch (\Facebook\Exceptions\FacebookSDKException $e) {
             \Log::error($e->getMessage());
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             \Log::error($e->getMessage());
         }
     }

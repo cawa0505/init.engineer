@@ -36,20 +36,16 @@ class FacebookPrimaryService extends BaseService implements SocialCardsContract
     }
 
     /**
-     * @param Cards $cards
+     * @param  Cards $cards
      * @throws \App\Exceptions\GeneralException
      * @return MediaCards
      */
     public function publish(Cards $cards)
     {
-        if ($this->mediaCardsRepository->findByCardId($cards->id, 'facebook', 'primary'))
-        {
+        if ($this->mediaCardsRepository->findByCardId($cards->id, 'facebook', 'primary')) {
             throw new GeneralException(__('exceptions.backend.social.media.cards.repeated_error'));
-        }
-        else
-        {
-            try
-            {
+        } else {
+            try {
                 $this->getAccessToken();
                 $response = $this->facebook->post(
                     sprintf(
@@ -57,42 +53,41 @@ class FacebookPrimaryService extends BaseService implements SocialCardsContract
                         config('facebook.connections.primary.user_id', 'FACEBOOK_CONNECTIONS_PRIMARY_USER_ID')
                     ),
                     [
-                        'message' => $this->buildContent($cards->content, [
+                        'message' => $this->buildContent(
+                            $cards->content,
+                            [
                             'id' => $cards->id,
-                        ]),
+                            ]
+                        ),
                         'source' => $this->facebook->fileToUpload($cards->images->first()->getPicture()),
-                    ],
+                    ]
                 );
 
-                return $this->mediaCardsRepository->create([
+                return $this->mediaCardsRepository->create(
+                    [
                     'card_id' => $cards->id,
                     'model_id' => $cards->model_id,
                     'social_type' => 'facebook',
                     'social_connections' => 'primary',
                     'social_card_id' => $response->getGraphUser()->getId(),
-                ]);
-            }
-            catch (\Facebook\Exceptions\FacebookSDKException $e)
-            {
+                    ]
+                );
+            } catch (\Facebook\Exceptions\FacebookSDKException $e) {
                 \Log::error($e->getMessage());
-            }
-            catch (Exception $e)
-            {
+            } catch (Exception $e) {
                 \Log::error($e->getMessage());
             }
         }
     }
 
     /**
-     * @param Cards $cards
+     * @param  Cards $cards
      * @return MediaCards
      */
     public function update(Cards $cards)
     {
-        if ($mediaCards = $this->mediaCardsRepository->findByCardId($cards->id, 'facebook', 'primary'))
-        {
-            try
-            {
+        if ($mediaCards = $this->mediaCardsRepository->findByCardId($cards->id, 'facebook', 'primary')) {
+            try {
                 $this->getAccessToken();
                 $response = $this->facebook->get(
                     sprintf(
@@ -102,17 +97,16 @@ class FacebookPrimaryService extends BaseService implements SocialCardsContract
                     )
                 );
                 $decodedBody = $response->getDecodedBody();
-                return $this->mediaCardsRepository->update($mediaCards, [
+                return $this->mediaCardsRepository->update(
+                    $mediaCards,
+                    [
                     'num_like' => $this->slicerCardsLikes($decodedBody),
                     'num_share' => $this->slicerCardsShare($decodedBody),
-                ]);
-            }
-            catch (\Facebook\Exceptions\FacebookSDKException $e)
-            {
+                    ]
+                );
+            } catch (\Facebook\Exceptions\FacebookSDKException $e) {
                 \Log::error($e->getMessage());
-            }
-            catch (Exception $e)
-            {
+            } catch (Exception $e) {
                 \Log::error($e->getMessage());
             }
         }
@@ -121,37 +115,34 @@ class FacebookPrimaryService extends BaseService implements SocialCardsContract
     }
 
     /**
-     * @param User  $user
-     * @param Cards $cards
-     * @param array $options
+     * @param  User  $user
+     * @param  Cards $cards
+     * @param  array $options
      * @return MediaCards
      */
     public function destory(User $user, Cards $cards, array $options)
     {
-        if ($mediaCards = $this->mediaCardsRepository->findByCardId($cards->id, 'facebook', 'primary'))
-        {
-            try
-            {
+        if ($mediaCards = $this->mediaCardsRepository->findByCardId($cards->id, 'facebook', 'primary')) {
+            try {
                 $this->getAccessToken();
                 $response = $this->facebook->delete(sprintf('/%s', $mediaCards->social_card_id));
                 $decodedBody = $response->getDecodedBody();
 
                 // TODO: 解析 decodedBody 的資訊
 
-                return $this->mediaCardsRepository->update($mediaCards, [
+                return $this->mediaCardsRepository->update(
+                    $mediaCards,
+                    [
                     'active' => false,
                     'is_banned' => true,
                     'banned_user_id' => $user->id,
                     'banned_remarks' => isset($options['remarks'])? $options['remarks'] : null,
                     'banned_at' => now(),
-                ]);
-            }
-            catch (\Facebook\Exceptions\FacebookSDKException $e)
-            {
+                    ]
+                );
+            } catch (\Facebook\Exceptions\FacebookSDKException $e) {
                 \Log::error($e->getMessage());
-            }
-            catch (Exception $e)
-            {
+            } catch (Exception $e) {
                 \Log::error($e->getMessage());
             }
         }
@@ -160,7 +151,7 @@ class FacebookPrimaryService extends BaseService implements SocialCardsContract
     }
 
     /**
-     * @param string $content
+     * @param  string $content
      * @return string
      */
     public function buildContent($content = '', array $options = [])
@@ -215,7 +206,7 @@ class FacebookPrimaryService extends BaseService implements SocialCardsContract
     }
 
     /**
-     * @param array $body
+     * @param  array $body
      * @return int
      */
     private function slicerCardsLikes($body) : int
@@ -232,7 +223,7 @@ class FacebookPrimaryService extends BaseService implements SocialCardsContract
     }
 
     /**
-     * @param array $body
+     * @param  array $body
      * @return int
      */
     private function slicerCardsShare($body) : int
