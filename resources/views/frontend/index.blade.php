@@ -103,7 +103,7 @@
             </div>
 
             <label class="col-label bg-color-primary color-color-primary">YKLM 大學</label>
-            <iframe src="https://yklm.schl.tw" width="100%" height="680" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+            <iframe class="bbsiframe" src="https://yklm.schl.tw" width="100%" height="100%" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         </div>
 
         <div class="col-12 col-lg-4 mx-auto my-2">
@@ -157,6 +157,10 @@ tr img {
     max-width: 24px;
     max-height: 24px;
     border-radius: 4px;
+}
+.bbsiframe {
+    height:calc(100vw * 0.4 - 20px);
+    min-height: 550px;
 }
 </style>
 @endpush
