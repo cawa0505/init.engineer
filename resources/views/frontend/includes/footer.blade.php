@@ -8,7 +8,7 @@
     <div class="container text-center text-md-left mt-5">
 
         <!-- Grid row -->
-        <div class="row mt-3">
+        <div class="d-none row mt-3">
 
             <!-- Grid column -->
             <div class="col-12 col-md-4 mx-auto mb-4">
