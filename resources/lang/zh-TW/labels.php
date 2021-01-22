@@ -118,8 +118,8 @@ return [
             'cards' => [
                 'management' => '文章',
                 'active' => '通過審核文章',
-                'deactivated' => '已軟刪除文章',
-                'deleted' => 'Deleted',
+                'deactivated' => '被停用的文章',
+                'deleted' => '被軟刪除的文章',
                 'card_actions' => '文章動作',
                 'view' => '查看文章',
                 'detail' => '文章詳細資訊',

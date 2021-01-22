@@ -90,30 +90,30 @@ class CardsStatusController extends Controller
 
     /**
      * @param ManageCardsRequest $request
-     * @param Cards              $cards
+     * @param int                $cardId
      *
      * @throws \App\Exceptions\GeneralException
      * @throws \Throwable
      * @return mixed
      */
-    public function delete(ManageCardsRequest $request, Cards $cards)
+    public function delete(ManageCardsRequest $request, $cardId)
     {
-        $this->cardsRepository->forceDelete($cards);
+        $this->cardsRepository->forceDelete($cardId);
 
         return redirect()->route('admin.social.cards.deleted')->withFlashSuccess(__('alerts.backend.social.cards.deleted_permanently'));
     }
 
     /**
      * @param ManageCardsRequest $request
-     * @param Cards              $cards
+     * @param int               $cardId
      *
      * @throws \App\Exceptions\GeneralException
      * @return mixed
      */
-    public function restore(ManageCardsRequest $request, Cards $cards)
+    public function restore(ManageCardsRequest $request, $cardId)
     {
-        $this->cardsRepository->restore($cards);
+        $this->cardsRepository->restore($cardId);
 
-        return redirect()->route('admin.social.cards.index')->withFlashSuccess(__('alerts.backend.social.cards.restored'));
+        return redirect()->route('admin.social.cards.deactivated')->withFlashSuccess(__('alerts.backend.social.cards.restored'));
     }
 }

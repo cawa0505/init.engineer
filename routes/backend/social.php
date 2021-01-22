@@ -34,7 +34,7 @@ Route::group([
             // Deleted
             Route::delete('banned', [CardsStatusController::class, 'banned'])->name('banned');
             Route::delete('delete', [CardsStatusController::class, 'delete'])->name('delete-permanently');
-            Route::delete('restore', [CardsStatusController::class, 'restore'])->name('restore');
+            Route::post('restore', [CardsStatusController::class, 'restore'])->name('restore');
         });
     });
 });

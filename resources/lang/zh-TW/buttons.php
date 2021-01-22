@@ -33,7 +33,7 @@ return [
         'social' => [
             'cards' => [
                 'delete_permanently' => '永久刪除',
-                'restore_cards' => '還原文章',
+                'restore_card' => '還原文章',
             ],
         ],
     ],
@@ -56,6 +56,7 @@ return [
             'banned' => '禁用',
             'soft_delete' => '軟刪除',
             'delete_permanently' => '永久刪除',
+            'restore' => '還原',
             'edit' => '編輯',
             'update' => '更新',
             'view' => '查看',

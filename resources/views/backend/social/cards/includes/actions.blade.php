@@ -1,12 +1,19 @@
 @if ($card->trashed())
     <div class="btn-group" role="group" aria-label="@lang('labels.backend.social.cards.card_actions')">
-        <a href="{{ route('admin.social.cards.restore', $card) }}" name="confirm_item" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="@lang('buttons.backend.social.cards.restore_card')">
-            <i class="fas fa-sync"></i>
-        </a>
-
-        <a href="{{ route('admin.social.cards.delete-permanently', $card) }}" name="confirm_item" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="@lang('buttons.backend.social.cards.delete_permanently')">
-            <i class="fas fa-trash"></i>
-        </a>
+        <a href="{{ route('admin.social.cards.restore', $card) }}"
+                data-method="post" class="btn btn-info"
+                data-toggle="tooltip" data-placement="top"
+                title="@lang('buttons.backend.social.cards.restore_card')"
+                data-trans-button-cancel="@lang('buttons.general.cancel')"
+                data-trans-button-confirm="@lang('buttons.general.crud.restore')"
+                data-trans-title="@lang('buttons.backend.social.cards.restore_card')">
+                <i class="fas fa-sync"></i></a>
+        <a href="{{ route('admin.social.cards.delete-permanently', $card) }}"
+                data-method="delete" class="btn btn-danger"
+                data-toggle="tooltip" data-placement="top"
+                title="@lang('buttons.backend.social.cards.delete_permanently')"
+                data-trans-title="@lang('buttons.backend.social.cards.delete_permanently')">
+                <i class="fas fa-trash"></i></a>
     </div>
 @elseif($card->isBanned())
     <div class="btn-group" role="group" aria-label="@lang('labels.backend.social.cards.card_actions')">

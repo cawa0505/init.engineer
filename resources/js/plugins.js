@@ -12,10 +12,10 @@ function addDeleteForms() {
   $('[data-method]').append(function () {
     var length = $(this).find('form').length > 0;
     if (!length) {
-      return "\n<form action='" + $(this).attr('href') + "' method='POST' name='delete_item' style='display:none'>\n" +
+      return "\n<form action='" + $(this).attr('href') + "' method='POST' name='"+$(this).attr('data-method')+"_item' style='display:none'>\n" +
         "<input type='hidden' name='_method' value='" + $(this).attr('data-method') + "'>\n" +
         "<input type='hidden' name='_token' value='" + $('meta[name="csrf-token"]').attr('content') + "'>\n" +
-        '</form>\n';
+        "</form>\n";
     } else { return ''; }
   })
     .attr('href', '#')
@@ -35,7 +35,7 @@ $(function () {
   /**
    * Disable all submit buttons once clicked
    */
-  $('form').submit(function () {
+  $('form').on('submit', function () {
     $(this).find('input[type="submit"]').attr('disabled', true);
     $(this).find('button[type="submit"]').attr('disabled', true);
     return true;

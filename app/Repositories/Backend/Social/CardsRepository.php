@@ -203,15 +203,16 @@ class CardsRepository extends BaseRepository
     }
 
     /**
-     * @param Cards $cards
+     * @param int $cards
      *
      * @throws GeneralException
      * @throws \Exception
      * @throws \Throwable
      * @return Cards
      */
-    public function forceDelete(Cards $cards) : Cards
+    public function forceDelete($cardId) : Cards
     {
+        $cards = $this->model->withTrashed()->find($cardId);
         if ($cards->deleted_at === null) {
             throw new GeneralException(__('exceptions.backend.social.cards.delete_first'));
         }
@@ -228,13 +229,14 @@ class CardsRepository extends BaseRepository
     }
 
     /**
-     * @param Cards $cards
+     * @param int $cardId
      *
      * @throws GeneralException
      * @return Cards
      */
-    public function restore(Cards $cards) : Cards
+    public function restore($cardId) : Cards
     {
+        $cards = $this->model->withTrashed()->find($cardId);
         if ($cards->deleted_at === null) {
             throw new GeneralException(__('exceptions.backend.social.cards.cant_restore'));
         }

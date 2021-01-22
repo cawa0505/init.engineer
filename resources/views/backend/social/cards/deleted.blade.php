@@ -54,10 +54,12 @@
                                         <td style="max-width: 24rem;">
                                             <div class="media">
                                                 <div class="media-left">
-                                                    <img class="media-object img-fluid rounded mr-1" src="{{ $card->images->first()->getPicture() }}" style="max-width: 128px;max-height: 128px;" alt="{{ $card->content }}">
-                                                </div>
-                                                <div class="media-body p-0">
-                                                    <p class="lead">{{ $card->content }}</p>
+                                                @if ($card->images->first())
+                                            <img class="media-object img-fluid rounded mr-1" data-toggle="tooltip"
+                                                data-placement="bottom" title="{{ $card->content }}"
+                                                src="{{ $card->images->first()->getPicture() ?? asset('img/frontend/default-image.png') }}"
+                                                style="max-width: 128px;max-height: 128px;" alt="{{ $card->content }}">
+                                            @endif
                                                 </div>
                                             </div>
                                         </td>
