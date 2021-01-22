@@ -16,7 +16,9 @@ export default {
   },
   methods: {
     toggleFullsize() {
-      this.isFullSize = !this.isFullSize
+      if (this.$screen.md) {
+        this.isFullSize = !this.isFullSize
+      }
     },
     normalize(e) {
       if (e.keyCode === 27) {
@@ -31,14 +33,19 @@ export default {
       } else {
         window.addEventListener("keydown", this.normalize);
       }
+    },
+    '$screen.width'() {
+        if ($screen.sm) {
+          this.isFullSize = false;
+        }
     }
   },
 };
 </script>
 <style scoped>
 .bbsiframe {
-    height:calc(100vw * 0.4 - 20px);
-    min-height: 550px;
+  height:calc(100vw * 0.4 - 20px);
+  min-height: 300px;
 }
 .fullsize {
   top: 38px;

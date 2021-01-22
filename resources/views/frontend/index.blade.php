@@ -118,17 +118,16 @@
                     <a class="my-2" href="{{ route('frontend.social.cards.create') }}"><img class="w-100" src="/img/frontend/banner/navbar02.png" alt="發表文章"></a>
                 </div>
                 <div class="col-6 mt-0 mb-1 pr-1 pl-0">
-                    <a class="my-2" href="{{ route('frontend.fortunes.index') }}"><img class="w-100" src="/img/frontend/banner/navbar05.png" alt="線上抽籤系統"></a>
-                </div>
-
-                <div class="col-6 mt-0 mb-1 pr-1 pl-0">
                     <a class="my-2" href="{{ route('frontend.social.cards.review') }}"><img class="w-100" src="/img/frontend/banner/navbar03.png" alt="群眾審核"></a>
                 </div>
                 <div class="col-6 mt-0 mb-1 pr-1 pl-0">
-                    <a class="my-2" href="{{ route('frontend.animal.index') }}"><img class="w-100" src="/img/frontend/banner/navbar01.png" alt="大頭菜計算機"></a>
-                </div>
-                <div class="col-6 mt-0 mb-1 pr-1 pl-0">
                     <a class="my-2" href="{{ route('frontend.social.cards.index') }}"><img class="w-100" src="/img/frontend/banner/navbar04.png" alt="文章列表"></a>
+                </div>
+                <div class="d-none col-6 mt-0 mb-1 pr-1 pl-0">
+                    <a class="my-2" href="{{ route('frontend.fortunes.index') }}"><img class="w-100" src="/img/frontend/banner/navbar05.png" alt="線上抽籤系統"></a>
+                </div>
+                <div class="d-none col-6 mt-0 mb-1 pr-1 pl-0">
+                    <a class="my-2" href="{{ route('frontend.animal.index') }}"><img class="w-100" src="/img/frontend/banner/navbar01.png" alt="大頭菜計算機"></a>
                 </div>
             </div>
 
