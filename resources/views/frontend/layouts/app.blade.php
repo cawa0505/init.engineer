@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 @langrtl
-    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="rtl" class="theme-dark">
+    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="rtl" class="theme-light">
 @else
-    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="theme-dark">
+    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="theme-light">
 @endlangrtl
     <head>
         <meta charset="utf-8">
