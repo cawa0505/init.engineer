@@ -272,10 +272,10 @@ export default {
         height: 720,
         is_center: true,
         content: null,
-        color: "#00FF3B",
-        background_color: "#000000",
+        color: "#F8F9FA",
+        background_color: "#E83E8C",
         font: "Auraka",
-        is_manager_line: false,
+        is_manager_line: this.isAdmin,
         feature: {
           is_to_be_continued: false
         },
@@ -283,7 +283,7 @@ export default {
       },
       avatar: null,
       theme: {
-        selector: "2e6046c7387d8fbe9acd700394a3add3",
+        selector: "7d37ef838c73b3397403eec4bf4f3839",
         options: [
           {
             text: "黑底綠字",
