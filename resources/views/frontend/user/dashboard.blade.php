@@ -59,8 +59,8 @@
                                 <div class="card mb-4 bg-img-rock text-white rounded-0 border border-w-6">
                                     <ins class="adsbygoogle"
                                         style="display:block"
-                                        data-ad-client="ca-pub-3028179090690423"
-                                        data-ad-slot="7777514837"
+                                        data-ad-client="ca-pub-4188608440091450"
+                                        data-ad-slot="1792789160"
                                         data-ad-format="auto"
                                         data-full-width-responsive="true"></ins>
                                 </div>

@@ -20,8 +20,8 @@
             <!--col-->
             <div class="col-12 mt-3">
                 <label class="col-label">這裡是 Ads 廣告</label>
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3028179090690423"
-                    data-ad-slot="2486547757" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4188608440091450"
+                    data-ad-slot="1792789160" data-ad-format="auto" data-full-width-responsive="true"></ins>
             </div>
         </div>
         <!--row-->

@@ -11,6 +11,7 @@ import Vue from 'vue';
 import Vuelidate from 'vuelidate';
 import VueTippy, { TippyComponent } from 'vue-tippy';
 import VueScreen from 'vue-screen';
+import VueTextareaAutosize from 'vue-textarea-autosize';
 
 window.Vue = Vue;
 Vue.use(Vuelidate);
@@ -20,6 +21,7 @@ Vue.use(VueScreen, {
     extend: 'bootstrap',
     tablet: screen => screen.md && !screen.xl && screen.touch,
 });
+Vue.use(VueTextareaAutosize);
 
 /**
  * The following block of code may be used to automatically register your

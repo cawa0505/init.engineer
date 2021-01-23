@@ -1,8 +1,8 @@
 <nav class="navbar navbar-expand-sm navbar-bg bg-black" style="font-size: 90%;">
-    <a href="{{ route('frontend.index') }}" class="navbar-brand mr-1" style="font-size: 100%;">🏠純靠首頁</a>
-    <a href="javascript:void(0);" class="nav-item px-1">幫助中心</a>
-    <a href="javascript:void(0);" class="nav-item px-1">網站地圖</a>
-    <a href="javascript:void(0);" class="nav-item px-1">加入最愛</a>
+    <a href="{{ route('frontend.index') }}" class="navbar-brand mr-1" style="font-size: 100%;">🏠首頁</a>
+    <a href="javascript:void(0);" class="d-none nav-item px-1">幫助中心</a>
+    <a href="javascript:void(0);" class="d-none nav-item px-1">網站地圖</a>
+    <a href="javascript:void(0);" class="d-none nav-item px-1">加入最愛</a>
 
     <button class="navbar-toggler navbar-toggler-right border-0 collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="@lang('labels.general.toggle_navigation')">
         <span class="navbar-toggler-icon icon-bar top-bar"></span>

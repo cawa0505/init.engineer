@@ -8,16 +8,16 @@
       <div class="col-12 col-md-6">
         <div class="form-group">
           <label class="col-label">內容編輯</label>
-          <textarea
+          <textarea-autosize
             class="form-control cards-editor"
             rows="7"
             minlength="30"
             maxlength="4096"
-            placeholder="跟大家分享你的靠北事吧。"
+            placeholder="說吧～"
             required
             v-model="canvas.content"
-            @keyup="onContentKeyup($event)"
-          ></textarea>
+            @keyup.native="onContentKeyup($event)"
+          />
           <p class="text-danger text-right">
             <strong>【注意事項】字數有限制，字不能太少，也不能太多字。</strong>
           </p>
@@ -45,7 +45,7 @@
         <div class="row">
           <div class="col-12">
             <div class="form-group">
-              <label class="col-label">選擇主題樣式(文字、背景顏色)</label>
+              <label class="col-label">選擇樣式(文字、背景顏色)</label>
               <select
                 class="form-control form-control-lg"
                 :class="theme.options.find(option => option.value === theme.selector).class"
@@ -89,6 +89,21 @@
 
       <div class="col-12 col-md-6">
         <div class="form-group">
+          <label class="col-label">發文類型</label>
+          <select
+            class="form-control form-control-lg btn-dark text-white"
+            v-model="hashtag.selector"
+            @change="onHashtagChange($event)"
+          >
+            <option
+              v-for="option in hashtag.options"
+              :key="option.value"
+              :value="option.value"
+            >{{ option.text }}</option>
+          </select>
+        </div>
+        <!--form-group-->
+        <div class="form-group d-none">
           <label class="col-label">To Be Continued</label>
 
           <div class="custom-control custom-checkbox">
@@ -97,12 +112,11 @@
               id="to-be-continued"
               class="control-input"
               v-model="canvas.feature.is_to_be_continued"
-              @click="drawingAll"
             />
             <label
               class="color-color-primary control-label"
               for="to-be-continued"
-            >是否在文章當中繪製 To Be Coutinued，建議主題選擇「黑底白字」</label>
+            >是否在文章當中繪製 To Be Coutinued，建議樣式選擇「黑底白字」</label>
           </div>
         </div>
         <!--form-group-->
@@ -169,13 +183,18 @@
 3. 請學習包容各種意見，如遇惡意批評或攻擊之文章，切勿加入爭執，並且善用檢舉，版主會有適當之處理，否則雙方皆依上述規定處理。
                         </pre>
             <hr />
-            <div class="pretty p-icon p-smooth">
+            <div class="pretty p-icon p-toggle p-plain">
               <input type="checkbox" id="checkbox" v-model="checked" />
-              <div class="state p-success">
-                <i class="icon fas fa-check"></i>
-                <label class="text-danger">我看完了，我願意遵守以上的板規，所以我按了勾勾以表示我同意。</label>
+              <div class="state p-on p-info-o">
+                <i class="icon bi bi-heart-fill"></i>
+                <label class="text-info">我真的有看，且願意遵守以上的板規</label>
+              </div>
+              <div class="state p-off">
+                <i class="icon bi bi-heart"></i>
+                <label class="text-danger">我不想遵守板規</label>
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -194,7 +213,6 @@
               id="manager-line"
               class="control-input"
               v-model="canvas.is_manager_line"
-              @click="drawingAll"
             />
             <label class="color-color-primary control-label" for="manager-line">是否在文章當中繪製版主群識別框線</label>
           </div>
@@ -259,7 +277,8 @@ export default {
         is_manager_line: false,
         feature: {
           is_to_be_continued: false
-        }
+        },
+        hashtag: "港覺"
       },
       avatar: null,
       theme: {
@@ -447,6 +466,31 @@ export default {
           }
         ]
       },
+      hashtag: {
+        selector: "#feeling",
+        options: [
+          {
+            text: "打屁",
+            value: "#chat",
+            board: "Chat"
+          },
+          {
+            text: "告白",
+            value: "#confess",
+            board: "Church"
+          },
+          {
+            text: "靠北",
+            value: "#grumble",
+            board: "grumble"
+          },
+          {
+            text: "港覺",
+            value: "#feeling",
+            board: "Feeling"
+          },
+        ]
+      },
       font: {
         selector: "ea98dde8987df3cd8aef75479019b688",
         options: [
@@ -523,6 +567,19 @@ export default {
       selector: {
         required
       }
+    },
+    hashtag: {
+      selector: {
+        required
+      }
+    }
+  },
+  watch: {
+    'canvas.is_manager_line': function(val) {
+      this.drawingAll();
+    },
+    'canvas.feature.is_to_be_continued': function(val) {
+      this.drawingAll();
     }
   },
   methods: {
@@ -546,6 +603,13 @@ export default {
       this.canvas.color = theme.color.text;
       this.canvas.background_color = theme.color.background;
 
+      this.drawingAll();
+    },
+    onHashtagChange(event) {
+      const hashtag = this.hashtag.options.find(
+        option => option.value === this.hashtag.selector
+      );
+      this.canvas.hashtag = hashtag.text;
       this.drawingAll();
     },
     onFontChange(event) {
@@ -718,7 +782,7 @@ export default {
             this.canvas.height - 120
           );
           this.canvas.ctx.fillText(
-            "請訪問 https://kaobei.engineer",
+            "請訪問 " + process.env.MIX_APP_URL,
             228,
             this.canvas.height - 40
           );
@@ -732,7 +796,7 @@ export default {
           this.canvas.ctx.font = "36px " + this.canvas.font;
           this.canvas.ctx.fillStyle = this.canvas.color;
           this.canvas.ctx.fillText(
-            "純靠北工程師",
+            process.env.MIX_APP_NAME,
             this.canvas.width - 232,
             this.canvas.height - 24
           );
@@ -742,8 +806,8 @@ export default {
           this.canvas.ctx.font = "36px " + this.canvas.font;
           this.canvas.ctx.fillStyle = this.canvas.color;
           this.canvas.ctx.fillText(
-            "純靠北工程師",
-            this.canvas.width - 232,
+            this.canvas.hashtag + process.env.MIX_APP_NAME,
+            this.canvas.width - 160,
             this.canvas.height - 24
           );
           return;
@@ -767,7 +831,12 @@ export default {
           this.canvas.ctx.font = "36px " + this.canvas.font;
           this.canvas.ctx.fillStyle = this.canvas.color;
           this.canvas.ctx.fillText(
-            "發文傳送門 https://kaobei.engineer",
+            this.hashtag.selector,
+            16,
+            this.canvas.height - 65
+          );
+          this.canvas.ctx.fillText(
+            process.env.MIX_APP_TITLE + " " + process.env.MIX_APP_URL,
             16,
             this.canvas.height - 24
           );
@@ -869,7 +938,7 @@ export default {
     publish() {
       this.$v.$touch();
       if (!this.checked) {
-        Swal.fire("哦噢 ...", "您需要按下同意遵守板規的勾勾。", "error");
+        Swal.fire("哦噢 ...", "不想遵守板規就沒辦法幫你發文囉。", "error");
         return;
       }
 
