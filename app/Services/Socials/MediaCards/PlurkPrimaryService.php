@@ -59,6 +59,7 @@ class PlurkPrimaryService extends BaseService implements SocialCardsContract
                     'content'   => $this->buildContent($cards->content, [
                         'id' => $cards->id,
                         'image_url' => $picture['full'],
+                        'hashtags' => $cards->metadata['hashtags'] ?? [],
                     ]),
                     'qualifier' => 'says',
                     'lang'      => 'tr_ch'
@@ -138,13 +139,17 @@ class PlurkPrimaryService extends BaseService implements SocialCardsContract
      */
     public function buildContent($content = '', array $options = [])
     {
-        $_content = (mb_strlen($content, 'utf-8') > 100) ? mb_substr($content, 0, 100, 'utf-8') . ' ...' : $content;
+        $options['hashtags'][] = '#情緒泥巴YKLM' .  base_convert($options['id'], 10, 36);
+        $addtags = implode(' ', $options['hashtags']);
+        
+        // $_content = (mb_strlen($content, 'utf-8') > 100) ? mb_substr($content, 0, 100, 'utf-8') . ' ...' : $content;
+        $_content = Str::limit($content, 100, ' ...');
 
         return $options['image_url'] . "\n\r" .
-            '#純靠北工程師' . base_convert($options['id'], 10, 36) . "\n\r----------\n\r" .
+            $addtags . "\n\r----------\n\r" .
             $_content . "\n\r----------\n\r" .
             '🗳️ [群眾審核] ' . route('frontend.social.cards.review') . '?' . Str::random(4) . "\n\r" .
-            '👉 [GitHub Repo] https://github.com/init-engineer/init.engineer' . '?' . Str::random(4) . "\n\r" .
+            '👉 [GitHub] https://github.com/yklmbbs/mood.schl' . '?' . Str::random(4) . "\n\r" .
             '📢 [匿名發文] ' . route('frontend.social.cards.create') . '?' . Str::random(4) . "\n\r" .
             '🥙 [全平台留言] ' . route('frontend.social.cards.show', ['id' => $options['id']]);
 

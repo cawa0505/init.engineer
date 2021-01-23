@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fcb0223963a9af4aa6481edbf9c4e6fb",
+    "content-hash": "dc9cda233fb8b03ba59b84c6c271c433",
     "packages": [
         {
             "name": "albertcht/invisible-recaptcha",
@@ -349,6 +349,57 @@
                 "source": "https://github.com/ARCANEDEV/Support/tree/master"
             },
             "time": "2020-02-14T16:40:44+00:00"
+        },
+        {
+            "name": "atymic/tmhoauth",
+            "version": "0.8.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/atymic/tmhOAuth.git",
+                "reference": "f24746d8ef2a44f62d0cbca9f3fcc3a320c99e05"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/atymic/tmhOAuth/zipball/f24746d8ef2a44f62d0cbca9f3fcc3a320c99e05",
+                "reference": "f24746d8ef2a44f62d0cbca9f3fcc3a320c99e05",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "tmhOAuth": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "themattharris",
+                    "email": "matt@themattharris.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "atymic",
+                    "email": "atymicq@gmail.com",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "A maintained fork of themattharris/tmhOAuth",
+            "keywords": [
+                "oauth",
+                "twitter"
+            ],
+            "support": {
+                "issues": "https://github.com/atymic/tmhOAuth/issues",
+                "source": "https://github.com/atymic/tmhOAuth/tree/master"
+            },
+            "time": "2020-06-21T00:50:34+00:00"
         },
         {
             "name": "creativeorange/gravatar",
@@ -4479,75 +4530,6 @@
             "time": "2020-02-21T04:36:14+00:00"
         },
         {
-            "name": "reliqarts/thujohn-twitter",
-            "version": "2.2.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/reliqarts/thujohn-twitter.git",
-                "reference": "367ac1ed5a751083815dfd468f397535d7632c16"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/reliqarts/thujohn-twitter/zipball/367ac1ed5a751083815dfd468f397535d7632c16",
-                "reference": "367ac1ed5a751083815dfd468f397535d7632c16",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "^6.0",
-                "php": "^7.2",
-                "themattharris/tmhoauth": "0.8.4",
-                "vlucas/phpdotenv": "^3.6"
-            },
-            "replace": {
-                "thujohn/twitter": "2.2.5"
-            },
-            "require-dev": {
-                "phpro/grumphp": "^0.15.2",
-                "phpunit/phpunit": "^8.3",
-                "wearejust/grumphp-extra-tasks": "^2.2"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "ReliqArts\\Thujohn\\Twitter\\TwitterServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "ReliqArts\\Thujohn\\Twitter\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "thujohn",
-                    "email": "jonathan.thuau@gmail.com"
-                },
-                {
-                    "name": "reliq",
-                    "email": "reliq@reliqarts.com"
-                }
-            ],
-            "description": "Twitter API for Laravel. Literally the Twitter API built by thujohn, supporting Laravel ^6.0.",
-            "keywords": [
-                "laravel",
-                "laravel6",
-                "thujohn",
-                "twitter"
-            ],
-            "support": {
-                "issues": "https://github.com/reliqarts/thujohn-twitter/issues",
-                "source": "https://github.com/reliqarts/thujohn-twitter/tree/master"
-            },
-            "abandoned": true,
-            "time": "2019-09-28T12:49:20+00:00"
-        },
-        {
             "name": "spatie/laravel-html",
             "version": "2.28.1",
             "source": {
@@ -6906,50 +6888,77 @@
             "time": "2020-12-08T16:59:59+00:00"
         },
         {
-            "name": "themattharris/tmhoauth",
-            "version": "0.8.4",
+            "name": "thujohn/twitter",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/themattharris/tmhOAuth.git",
-                "reference": "455552d6c57549632644b6c9ac9204766be2b5ee"
+                "url": "https://github.com/atymic/twitter.git",
+                "reference": "514c28023fcd2250bbb2120e0224b13f82cc5150"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/themattharris/tmhOAuth/zipball/455552d6c57549632644b6c9ac9204766be2b5ee",
-                "reference": "455552d6c57549632644b6c9ac9204766be2b5ee",
+                "url": "https://api.github.com/repos/atymic/twitter/zipball/514c28023fcd2250bbb2120e0224b13f82cc5150",
+                "reference": "514c28023fcd2250bbb2120e0224b13f82cc5150",
                 "shasum": ""
             },
             "require": {
-                "ext-curl": "*",
-                "php": ">=5.3.0"
+                "atymic/tmhoauth": "0.8.6",
+                "ext-json": "*",
+                "illuminate/support": "~5.5 || ~6.0 || ~7.0 || ~8.0",
+                "php": ">7.2.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.3"
             },
             "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Thujohn\\Twitter\\TwitterServiceProvider"
+                    ],
+                    "aliases": {
+                        "Twitter": "Thujohn\\Twitter\\Facades\\Twitter"
+                    }
+                }
+            },
             "autoload": {
                 "psr-0": {
-                    "tmhOAuth": ""
+                    "Thujohn\\Twitter": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache-2.0"
+                "MIT"
             ],
             "authors": [
                 {
-                    "name": "themattharris",
-                    "email": "matt@themattharris.com",
-                    "role": "Developer"
+                    "name": "thujohn",
+                    "email": "jonathan.thuau@gmail.com"
+                },
+                {
+                    "name": "atymic",
+                    "email": "atymicq@gmail.com",
+                    "homepage": "https://atymic.dev"
                 }
             ],
-            "description": "An OAuth library written in PHP by @themattharris",
+            "description": "Twitter API for Laravel",
             "keywords": [
-                "oauth",
+                "laravel",
+                "laravel4",
+                "laravel5",
                 "twitter"
             ],
             "support": {
-                "issues": "https://github.com/themattharris/tmhOAuth/issues",
-                "source": "https://github.com/themattharris/tmhOAuth/tree/master"
+                "issues": "https://github.com/atymic/twitter/issues",
+                "source": "https://github.com/atymic/twitter/tree/master"
             },
-            "time": "2014-08-06T22:29:35+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/atymic",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-09-09T00:05:36+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

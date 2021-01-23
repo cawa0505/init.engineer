@@ -40,14 +40,16 @@ class CardsService extends BaseService implements CardsContract
      */
     public function publish(Cards $cards)
     {
-        if (env('FACEBOOK_PRIMARY_CREATE_POST', false) && (! $this->mediaCardsRepository->findByCardId($cards->id, 'facebook', 'primary')))
-            FacebookPrimaryPublish::dispatch($cards);
-        if (env('FACEBOOK_SECONDARY_CREATE_POST', false) && (! $this->mediaCardsRepository->findByCardId($cards->id, 'facebook', 'secondary')))
-            FacebookSecondaryPublish::dispatch($cards);
-        if (env('TWITTER_CREATE_POST', false) && (! $this->mediaCardsRepository->findByCardId($cards->id, 'twitter', 'primary')))
+
+        // if (env('FACEBOOK_PRIMARY_CREATE_POST', false) && (! $this->mediaCardsRepository->findByCardId($cards->id, 'facebook', 'primary')))
+        //     FacebookPrimaryPublish::dispatch($cards);
+        // if (env('FACEBOOK_SECONDARY_CREATE_POST', false) && (! $this->mediaCardsRepository->findByCardId($cards->id, 'facebook', 'secondary')))
+        //     FacebookSecondaryPublish::dispatch($cards);
+        if (env('TWITTER_CREATE_POST', false) && (! $this->mediaCardsRepository->findByCardId($cards->id, 'twitter', 'primary'))) {
             TwitterPrimaryPublish::dispatch($cards);
-        if (env('PLURK_CREATE_POST', false) && (! $this->mediaCardsRepository->findByCardId($cards->id, 'plurk', 'primary')))
-            PlurkPrimaryPublish::dispatch($cards);
+        }
+        // if (env('PLURK_CREATE_POST', false) && (! $this->mediaCardsRepository->findByCardId($cards->id, 'plurk', 'primary')))
+        //     PlurkPrimaryPublish::dispatch($cards);
     }
 
     /**
@@ -56,9 +58,10 @@ class CardsService extends BaseService implements CardsContract
      */
     public function creationNotify(Cards $cards)
     {
-        if (env('DISCORD_CREATION_NOTIFY') !== "") {
+        $url = config('discord.creation_notify');
+        if (!empty(env('DISCORD_CREATION_NOTIFY'))) {
             $client = new Client();
-            $client->request('POST', env('DISCORD_CREATION_NOTIFY'), [
+            $client->request('POST', $url, [
                 'json' => [
                     "embeds" => [
                         [
@@ -83,9 +86,10 @@ class CardsService extends BaseService implements CardsContract
      */
     public function publishNotify(Cards $cards)
     {
-        if (env('DISCORD_PUBLISH_NOTIFY') !== "") {
+        $url = config('discord.publish_notify');
+        if (!empty($url)) {
             $client = new Client();
-            $client->request('POST', env('DISCORD_PUBLISH_NOTIFY'), [
+            $client->request('POST', $url, [
                 'json' => [
                     "embeds" => [
                         [

@@ -29,7 +29,7 @@
       <div class="col-12 col-md-6">
         <div class="form-group">
           <label class="col-label">預覽</label>
-          <canvas class="rounded mx-auto d-block w-100" width="960" height="720" ref="canvasView">
+          <canvas id="previewCanvas" class="rounded mx-auto d-block w-100" width="960" height="720" ref="canvasView">
             <!-- 倘若使用者的瀏覽器並不支援 canvas，將會顯示該段內容。 -->
             您的瀏覽器必須支援 HTML5 標籤語法，才能使用圖片(即時)預覽功能。
           </canvas>
@@ -55,6 +55,7 @@
                 <option
                   :class="option.class"
                   v-for="option in theme.options"
+                  v-if="option.enable"
                   :key="option.value"
                   :value="option.value"
                 >{{ option.text }}</option>
@@ -288,6 +289,7 @@ export default {
             text: "黑底綠字",
             class: "bg-dark text-success",
             value: "2e6046c7387d8fbe9acd700394a3add3",
+            enable: true,
             color: {
               background: "#000000",
               text: "#00FF3B"
@@ -297,6 +299,7 @@ export default {
             text: "黑底黃字",
             class: "bg-dark text-warning",
             value: "be551aa525b9d13790278b008a9ec7bf",
+            enable: true,
             color: {
               background: "#000000",
               text: "#EBD443"
@@ -306,6 +309,7 @@ export default {
             text: "黑底白字",
             class: "bg-dark text-white",
             value: "8a755c0bd32e29f813c1aa4267357d5a",
+            enable: true,
             color: {
               background: "#000000",
               text: "#F8F9FA"
@@ -315,6 +319,7 @@ export default {
             text: "黑底紅字",
             class: "bg-dark text-danger",
             value: "507d8c23bdcc98850c7be1c1286d5dcf",
+            enable: true,
             color: {
               background: "#000000",
               text: "#DC3545"
@@ -324,6 +329,7 @@ export default {
             text: "甜甜香草巧克力熊貓",
             class: "bg-pink text-white",
             value: "7d37ef838c73b3397403eec4bf4f3839",
+            enable: true,
             color: {
               background: "#E83E8C",
               text: "#F8F9FA"
@@ -333,6 +339,7 @@ export default {
             text: "藍白屏",
             class: "bg-primary text-white",
             value: "4834578267bcb800feb2762d2a3ccff2",
+            enable: true,
             color: {
               background: "#007BFF",
               text: "#F8F9FA"
@@ -342,6 +349,7 @@ export default {
             text: "PostgreSQL",
             class: "bg-light text-primary",
             value: "dc7b1c2c41639e5cf10f725d60ad8c64",
+            enable: true,
             color: {
               background: "#F8F9FA",
               text: "#007BFF"
@@ -351,6 +359,7 @@ export default {
             text: "Laravel",
             class: "bg-laravel text-white",
             value: "a5c95b86291ea299fcbe64458ed12702",
+            enable: true,
             color: {
               background: "#F4645F",
               text: "#F8F9FA"
@@ -360,6 +369,7 @@ export default {
             text: "軟體綠",
             class: "bg-softgreen text-dark",
             value: "731019ad725385614d65fbcc5fb1758e",
+            enable: true,
             color: {
               background: "#39C5BB",
               text: "#000000"
@@ -369,6 +379,7 @@ export default {
             text: "皮卡丘",
             class: "bg-switch color-pikachu",
             value: "9CE44F88A25272B6D9CBB430EBBCFCF1",
+            enable: true,
             color: {
               background: "#2F3437",
               text: "#FFD547"
@@ -378,6 +389,7 @@ export default {
             text: "伊布",
             class: "bg-switch color-eevee",
             value: "640ED62B7D35C1765A05EB8724535A53",
+            enable: true,
             color: {
               background: "#2F3437",
               text: "#E7AF56"
@@ -387,6 +399,7 @@ export default {
             text: "反向 皮卡丘",
             class: "bg-pikachu color-switch",
             value: "9A2E33D968A1AF98B09E26AC63CB6DCB",
+            enable: true,
             color: {
               background: "#FFD547",
               text: "#2F3437"
@@ -396,6 +409,7 @@ export default {
             text: "反向 伊布",
             class: "bg-eevee color-switch",
             value: "98C614FBC16CCF5D5740BD4D4E00757C",
+            enable: true,
             color: {
               background: "#E7AF56",
               text: "#2F3437"
@@ -405,6 +419,7 @@ export default {
             text: "新年限定主題",
             class: "bg-ch-new-year-2019-red color-ch-new-year-2019-yellow",
             value: "2be6c9a365a26a12876145e9229639b1",
+            enable: true,
             color: {
               background: "#A61723",
               text: "#D8B06A"
@@ -414,6 +429,7 @@ export default {
             text: "反向 新年限定主題",
             class: "bg-ch-new-year-2019-yellow color-ch-new-year-2019-red",
             value: "b9b8ae80a601616cb9af07aaabe532f4",
+            enable: true,
             color: {
               background: "#D8B06A",
               text: "#A61723"
@@ -423,6 +439,7 @@ export default {
             text: "恭迎慈孤觀音 渡世靈顯四方",
             class: "bg-devotion text-dark",
             value: "05217b7d4741e38096a54eff4226c217",
+            enable: false,
             color: {
               background: "#F11541",
               text: "#000000"
@@ -432,6 +449,7 @@ export default {
             text: "Windows 最棒的畫面",
             class: "bg-windows-10-error text-white",
             value: "32d2a897602ef652ed8e15d66128aa74",
+            enable: false,
             color: {
               background: "#007BD0",
               text: "#F8F9FA"
@@ -441,6 +459,7 @@ export default {
             text: "Windows 最棒的畫面 測試人員組件",
             class: "bg-windows-10-testing-error text-white",
             value: "tumx453xqZLjf5kaFFBzNj4gqVXKWqXz",
+            enable: false,
             color: {
               background: "#107C10",
               text: "#F8F9FA"
@@ -450,6 +469,7 @@ export default {
             text: "粉紅色",
             class: "bg-pink-secondary color-pink",
             value: "j874kwoxi2nh64yt67wtphy9m5dmea4q",
+            enable: true,
             color: {
               background: "#F8C0C8",
               text: "#FF5376"
@@ -459,6 +479,7 @@ export default {
             text: "支離滅裂な思考・発言",
             class: "bg-light text-dark",
             value: "05326525f82b9a036e1bcb53a392ff7c",
+            enable: false,
             color: {
               background: "#F8F9FA",
               text: "#000000"
@@ -966,16 +987,21 @@ export default {
           if (this.avatar) {
             data = new FormData();
             data.append("content", this.canvas.content);
+            data.append("hashtag", this.hashtag.selector);
             data.append("themeStyle", this.theme.selector);
             data.append("fontStyle", this.font.selector);
             data.append("avatar", this.avatar);
           } else {
+            var finalCanvas = document.getElementById('previewCanvas');
+            var canvasBase64 = finalCanvas.toDataURL();
             data = {
               content: this.canvas.content,
+              hashtag: this.hashtag.selector,
               themeStyle: this.theme.selector,
               fontStyle: this.font.selector,
               isManagerLine: this.canvas.is_manager_line,
-              isFeatureToBeCoutinued: this.canvas.feature.is_to_be_continued
+              isFeatureToBeCoutinued: this.canvas.feature.is_to_be_continued,
+              base64: canvasBase64,
             };
           }
 

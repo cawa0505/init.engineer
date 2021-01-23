@@ -7,8 +7,9 @@ use App\Models\Auth\User;
 use App\Models\Social\Cards;
 use App\Services\BaseService;
 use App\Exceptions\GeneralException;
-use ReliqArts\Thujohn\Twitter\Facades\Twitter;
+use Thujohn\Twitter\Facades\Twitter;
 use App\Repositories\Backend\Social\MediaCardsRepository;
+use Illuminate\Support\Str;
 
 /**
  * Class TwitterPrimaryService.
@@ -48,6 +49,7 @@ class TwitterPrimaryService extends BaseService implements SocialCardsContract
                 $response = Twitter::postTweet([
                     'status' => $this->buildContent($cards->content, [
                         'id' => $cards->id,
+                        'hashtags' => $cards->metadata['hashtags'] ?? [],
                     ]),
                     'media_ids' => $picture->media_id_string
                 ]);
@@ -137,12 +139,16 @@ class TwitterPrimaryService extends BaseService implements SocialCardsContract
      */
     public function buildContent($content = '', array $options = [])
     {
-        $_content = (mb_strlen($content, 'utf-8') > 20)? mb_substr($content, 0, 20, 'utf-8') . ' ...' : $content;
+        $options['hashtags'][] = '#情緒泥巴YKLM' .  base_convert($options['id'], 10, 36);
+        $addtags = implode(' ', $options['hashtags']);
 
-        return '#純靠北工程師' . base_convert($options['id'], 10, 36) . "\n\r----------\n\r" .
+        // $_content = (mb_strlen($content, 'utf-8') > 20)? mb_substr($content, 0, 20, 'utf-8') . ' ...' : $content;
+        $_content = Str::limit($content, 20, ' ...');
+
+        return $addtags . "\n\r----------\n\r" .
             $_content . "\n\r----------\n\r" .
             '🗳️ [群眾審核] ' . route('frontend.social.cards.review') . "\n\r" .
-            '👉 [GitHub Repo] https://github.com/init-engineer/init.engineer' . "\n\r" .
+            '👉 [GitHub] https://github.com/yklmbbs/mood.schl' . "\n\r" .
             '📢 [匿名發文] ' . route('frontend.social.cards.create') . "\n\r" .
             '🥙 [全平台留言] ' . route('frontend.social.cards.show', ['id' => $options['id']]);
 

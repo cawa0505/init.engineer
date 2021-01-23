@@ -107,6 +107,7 @@ class CardsRepository extends BaseRepository
                 'model_type' => isset($data['model_type'])? $data['model_type'] : User::class,
                 'model_id' => $data['model_id'],
                 'content' => $data['content'],
+                'metadata' => $data['metadata'],
                 'active' => $data['active'] ?? false,
             ]);
 

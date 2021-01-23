@@ -3,7 +3,7 @@
     <vue-gallery :images="images" :index="gallery" @close="gallery = null" />
 
     <div class="card-columns">
-      <financial-status></financial-status>
+      <financial-status class="d-none"></financial-status>
 
       <div v-if="cards === undefined">
         <vue-content-loading

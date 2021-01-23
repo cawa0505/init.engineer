@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container mt-3">
-        <financial-status></financial-status>
+        <financial-status class="d-none"></financial-status>
     </div>
 
     <div class="container my-3">
