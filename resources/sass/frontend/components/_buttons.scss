@@ -217,6 +217,11 @@ a, span, button {
             color: darkgrey;
             background-color: #A3322E;
         }
+
+        &:hover {
+            color: white;
+            background-color: #A3322E;
+        }
     }
 
     &.btn-orange {

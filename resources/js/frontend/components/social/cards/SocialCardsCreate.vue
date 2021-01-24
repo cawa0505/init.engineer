@@ -1,7 +1,7 @@
 <template>
   <div>
     <marquee-text class="mb-3">
-      <h1 class="color-color-primary">發源自臉書──全台最大工程師廢文社群 (´◓Д◔`) 我看你是不夠敏捷ㄛ？</h1>
+      <h1 class="color-color-primary">這裡是 YKLM 心情集散地，不論是告白 幹譙 靠北 傾訴 都歡迎來 PO 文～</h1>
     </marquee-text>
 
     <div class="row">
@@ -509,6 +509,11 @@ export default {
             text: "港覺",
             value: "#feeling",
             board: "Feeling"
+          },
+          {
+            text: "許願",
+            value: "#wishes",
+            board: "Church"
           },
         ]
       },

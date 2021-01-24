@@ -143,7 +143,7 @@ class TwitterPrimaryService extends BaseService implements SocialCardsContract
         $addtags = implode(' ', $options['hashtags']);
 
         // $_content = (mb_strlen($content, 'utf-8') > 20)? mb_substr($content, 0, 20, 'utf-8') . ' ...' : $content;
-        $_content = Str::limit($content, 20, ' ...');
+        $_content = Str::limit($content, 30, ' ...');
 
         return $addtags . "\n\r----------\n\r" .
             $_content . "\n\r----------\n\r" .

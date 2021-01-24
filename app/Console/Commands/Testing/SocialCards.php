@@ -108,14 +108,14 @@ class SocialCards extends Command
     public function handle()
     {
         // $user = User::find(1);
-        $cards = Cards::find(70);
+        $cards = Cards::find(74);
 
         /**
          * 測試發表文章到社群平台
          */
-        $this->plurkPrimaryMediaCardsService->publish($cards);
+        // $this->plurkPrimaryMediaCardsService->publish($cards);
         // $this->twitterPrimaryMediaCardsService->publish($cards);
-        // $this->facebookPrimaryMediaCardsService->publish($cards);
+        $this->facebookPrimaryMediaCardsService->publish($cards);
         // $this->facebookSecondaryMediaCardsService->publish($cards);
 
         /**

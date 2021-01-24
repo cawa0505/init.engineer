@@ -108,7 +108,7 @@
                                 @forelse ($card->medias as $media)
                                 <tr>
                                     <td>
-                                        <a class="btn btn-sm m-1 animated faster btn-{{ $media->social_type }}"
+                                        <a class="btn btn-sm btn-{{ $media->social_type }} m-1 animated faster"
                                             href="{{ $media->getLink() }}" target="_blank">
                                             <p class="m-1"><i class="fas fa-share"></i> {{ $media->social_type }}
                                                 {{ ($media->social_connections === 'primary') ? '主站' : '次站' }}</p>
