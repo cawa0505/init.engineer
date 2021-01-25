@@ -8,6 +8,7 @@ use App\Services\BaseService;
 use App\Jobs\Social\MediaCards\PlurkPrimaryDestory;
 use App\Jobs\Social\MediaCards\PlurkPrimaryPublish;
 use App\Jobs\Social\MediaCards\TwitterPrimaryPublish;
+use App\Jobs\Social\MediaCards\TelegramPrimaryPublish;
 use App\Jobs\Social\MediaCards\TwitterPrimaryDestory;
 use App\Jobs\Social\MediaCards\FacebookPrimaryDestory;
 use App\Jobs\Social\MediaCards\FacebookPrimaryPublish;
@@ -51,6 +52,9 @@ class CardsService extends BaseService implements CardsContract
         }
         if (env('PLURK_CREATE_POST', false) && (! $this->mediaCardsRepository->findByCardId($cards->id, 'plurk', 'primary'))) {
             PlurkPrimaryPublish::dispatch($cards);
+        }
+        if (env('TELEGRAM_CREATE_POST', false) && (! $this->mediaCardsRepository->findByCardId($cards->id, 'telegram', 'primary'))) {
+            TelegramPrimaryPublish::dispatch($cards);
         }
     }
 

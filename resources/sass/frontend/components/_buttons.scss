@@ -224,6 +224,21 @@ a, span, button {
         }
     }
 
+    &.btn-telegram {
+        color: white;
+        background-color: #2AA5E0;
+
+        &:active {
+            color: darkgrey;
+            background-color: #1b88bc;
+        }
+
+        &:hover {
+            color: white;
+            background-color: #1b88bc;
+        }
+    }
+
     &.btn-orange {
         color: white;
         background-color: #FD7E14;

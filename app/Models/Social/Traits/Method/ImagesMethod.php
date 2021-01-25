@@ -49,6 +49,21 @@ trait ImagesMethod
     }
 
     /**
+     * @return string
+     */
+    public function getPath()
+    {
+        $file_path = sprintf(
+            '%s/%s.%s',
+            $this->avatar_path,
+            $this->avatar_name,
+            $this->avatar_type
+        );
+
+        return storage_path($file_path);
+    }
+
+    /**
      * @param bool $size
      *
      * @throws \Illuminate\Container\EntryNotFoundException

@@ -16,6 +16,14 @@ trait ImagesAttribute
     }
 
     /**
+     * @return string
+     */
+    public function getPathAttribute()
+    {
+        return $this->getPath();
+    }
+
+    /**
      * @return mixed
      */
     public function getPictureAttribute()

@@ -140,8 +140,9 @@ class CardsController extends Controller
             $avatar = $this->imagesService->uploadImage([], $request->file('avatar'));
         } else if ($request->has('base64')) {
             $base64File = $request->input('base64');
+            $extension = explode('/', mime_content_type($base64File))[1];
             $fileData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64File));
-            $tmpFilePath = sys_get_temp_dir() . '/' . Str::uuid()->toString();
+            $tmpFilePath = sys_get_temp_dir() . '/' . Str::uuid()->toString() . '.' . $extension;
             file_put_contents($tmpFilePath, $fileData);
             $tmpFile = new File($tmpFilePath);
             $file = new UploadedFile(

@@ -205,6 +205,7 @@ return [
         /**
          * Custom Providers
          */
+        Telegram\Bot\Laravel\TelegramServiceProvider::class,
     ],
 
     /*

@@ -9,6 +9,8 @@ use App\Services\Socials\Comments\PlurkPrimaryService as PlurkPrimaryCommentsSer
 use App\Services\Socials\MediaCards\PlurkPrimaryService as PlurkPrimaryMediaCardsService;
 use App\Services\Socials\Comments\TwitterPrimaryService as TwitterPrimaryCommentsService;
 use App\Services\Socials\MediaCards\TwitterPrimaryService as TwitterPrimaryMediaCardsService;
+use App\Services\Socials\Comments\TelegramPrimaryService as TelegramPrimaryCommentsService;
+use App\Services\Socials\MediaCards\TelegramPrimaryService as TelegramPrimaryMediaCardsService;
 use App\Services\Socials\Comments\FacebookPrimaryService as FacebookPrimaryCommentsService;
 use App\Services\Socials\MediaCards\FacebookPrimaryService as FacebookPrimaryMediaCardsService;
 use App\Services\Socials\Comments\FacebookSecondaryService as FacebookSecondaryCommentsService;
@@ -44,6 +46,11 @@ class SocialCards extends Command
     protected $twitterPrimaryCommentsService;
 
     /**
+     * @var App\Services\Socials\Comments\TelegramPrimaryService
+     */
+    protected $telegramPrimaryCommentsService;
+
+    /**
      * @var App\Services\Socials\Comments\FacebookPrimaryService
      */
     protected $facebookPrimaryCommentsService;
@@ -62,6 +69,12 @@ class SocialCards extends Command
      * @var App\Services\Socials\MediaCards\TwitterPrimaryService
      */
     protected $twitterPrimaryMediaCardsService;
+
+    /**
+     * @var App\Services\Socials\MediaCards\TelegramPrimaryService
+     */
+    protected $telegramPrimaryMediaCardsService;
+
 
     /**
      * @var App\Services\Socials\MediaCards\FacebookPrimaryService
@@ -83,6 +96,8 @@ class SocialCards extends Command
         PlurkPrimaryMediaCardsService $plurkPrimaryMediaCardsService,
         TwitterPrimaryCommentsService $twitterPrimaryCommentsService,
         TwitterPrimaryMediaCardsService $twitterPrimaryMediaCardsService,
+        TelegramPrimaryCommentsService $telegramPrimaryCommentsService,
+        TelegramPrimaryMediaCardsService $telegramPrimaryMediaCardsService,
         FacebookPrimaryCommentsService $facebookPrimaryCommentsService,
         FacebookPrimaryMediaCardsService $facebookPrimaryMediaCardsService,
         FacebookSecondaryCommentsService $facebookSecondaryCommentsService,
@@ -94,6 +109,8 @@ class SocialCards extends Command
         $this->plurkPrimaryMediaCardsService = $plurkPrimaryMediaCardsService;
         $this->twitterPrimaryCommentsService = $twitterPrimaryCommentsService;
         $this->twitterPrimaryMediaCardsService = $twitterPrimaryMediaCardsService;
+        $this->telegramPrimaryCommentsService = $telegramPrimaryCommentsService;
+        $this->telegramPrimaryMediaCardsService = $telegramPrimaryMediaCardsService;
         $this->facebookPrimaryCommentsService = $facebookPrimaryCommentsService;
         $this->facebookPrimaryMediaCardsService = $facebookPrimaryMediaCardsService;
         $this->facebookSecondaryCommentsService = $facebookSecondaryCommentsService;
@@ -107,15 +124,16 @@ class SocialCards extends Command
      */
     public function handle()
     {
-        // $user = User::find(1);
-        $cards = Cards::find(74);
+        // $user = User::find(7);
+        $cards = Cards::find(93);
 
         /**
          * 測試發表文章到社群平台
          */
-        // $this->plurkPrimaryMediaCardsService->publish($cards);
+        $this->plurkPrimaryMediaCardsService->publish($cards);
+        // $this->telegramPrimaryMediaCardsService->publish($cards);
         // $this->twitterPrimaryMediaCardsService->publish($cards);
-        $this->facebookPrimaryMediaCardsService->publish($cards);
+        // $this->facebookPrimaryMediaCardsService->publish($cards);
         // $this->facebookSecondaryMediaCardsService->publish($cards);
 
         /**
@@ -137,6 +155,7 @@ class SocialCards extends Command
         /**
          * 測試刪除社群平台的文章
          */
+        // $this->telegramPrimaryMediaCardsService->destory($user, $cards, ['remarks' => '刪除測試文章。']);
         // $this->plurkPrimaryMediaCardsService->destory($user, $cards, ['remarks' => '刪除測試文章。']);
         // $this->twitterPrimaryMediaCardsService->destory($user, $cards, ['remarks' => '刪除測試文章。']);
         // $this->facebookPrimaryMediaCardsService->destory($user, $cards, ['remarks' => '刪除測試文章。']);

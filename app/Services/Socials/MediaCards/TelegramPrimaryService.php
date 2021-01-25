@@ -7,14 +7,15 @@ use App\Models\Auth\User;
 use App\Models\Social\Cards;
 use App\Services\BaseService;
 use App\Exceptions\GeneralException;
-use Thujohn\Twitter\Facades\Twitter;
+use Telegram\Bot\Laravel\Facades\Telegram;
 use App\Repositories\Backend\Social\MediaCardsRepository;
+use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 
 /**
- * Class TwitterPrimaryService.
+ * Class TelegramPrimaryService.
  */
-class TwitterPrimaryService extends BaseService implements SocialCardsContract
+class TelegramPrimaryService extends BaseService implements SocialCardsContract
 {
     /**
      * @var MediaCardsRepository
@@ -22,7 +23,7 @@ class TwitterPrimaryService extends BaseService implements SocialCardsContract
     protected $mediaCardsRepository;
 
     /**
-     * TwitterPrimaryService constructor.
+     * TelegramPrimaryService constructor.
      */
     public function __construct(MediaCardsRepository $mediaCardsRepository)
     {
@@ -35,7 +36,7 @@ class TwitterPrimaryService extends BaseService implements SocialCardsContract
      */
     public function publish(Cards $cards)
     {
-        if ($this->mediaCardsRepository->findByCardId($cards->id, 'twitter', 'primary'))
+        if ($this->mediaCardsRepository->findByCardId($cards->id, 'telegram', 'primary'))
         {
             throw new GeneralException(__('exceptions.backend.social.media.cards.repeated_error'));
         }
@@ -43,23 +44,21 @@ class TwitterPrimaryService extends BaseService implements SocialCardsContract
         {
             try
             {
-                $picture = Twitter::uploadMedia([
-                    'media' => $cards->images->first()->getFile(),
-                ]);
-                $response = Twitter::postTweet([
-                    'status' => $this->buildContent($cards->content, [
+                $response = Telegram::sendPhoto([
+                    'chat_id' => config('social.telegram.primary.user_id'), 
+                    'photo' => $cards->images->first()->getPicture(), 
+                    'caption' => $this->buildContent($cards->content, [
                         'id' => $cards->id,
                         'hashtags' => $cards->metadata['hashtags'] ?? [],
-                    ]),
-                    'media_ids' => $picture->media_id_string
-                ]);
-
+                    ])
+                  ]);
+                
                 return $this->mediaCardsRepository->create([
                     'card_id' => $cards->id,
                     'model_id' => $cards->model_id,
-                    'social_type' => 'twitter',
+                    'social_type' => 'telegram',
                     'social_connections' => 'primary',
-                    'social_card_id' => $response->id,
+                    'social_card_id' => $response['message_id'],
                 ]);
             }
             catch (Exception $e)
@@ -75,11 +74,11 @@ class TwitterPrimaryService extends BaseService implements SocialCardsContract
      */
     public function update(Cards $cards)
     {
-        if ($mediaCards = $this->mediaCardsRepository->findByCardId($cards->id, 'twitter', 'primary'))
+        if ($mediaCards = $this->mediaCardsRepository->findByCardId($cards->id, 'telegram', 'primary'))
         {
             try
             {
-                $response = Twitter::getTweet($mediaCards->social_card_id);
+                $response = Telegram::getTweet($mediaCards->social_card_id);
                 return $this->mediaCardsRepository->update($mediaCards, [
                     'num_like' => $response->favorite_count,
                     'num_share' => $response->retweet_count,
@@ -102,11 +101,22 @@ class TwitterPrimaryService extends BaseService implements SocialCardsContract
      */
     public function destory(User $user, Cards $cards, array $options)
     {
-        if ($mediaCards = $this->mediaCardsRepository->findByCardId($cards->id, 'twitter', 'primary'))
+        if ($mediaCards = $this->mediaCardsRepository->findByCardId($cards->id, 'telegram', 'primary'))
         {
             try
             {
-                $response = Twitter::destroyTweet($mediaCards->social_card_id);
+                // Delete Photo not working.
+                $request = sprintf("https://api.telegram.org/bot%s/deleteMesaage?chat_id=%s&message_id=%d", 
+                                    config('telegram.bot_token'),
+                                    config('social.telegram.primary.user_id'),
+                                    $mediaCards->social_card_id
+                            );
+                            dd($request);
+                // $response = Telegram::deleteMessage($mediaCards->social_card_id);
+                $http = new Client();
+                $response = $http->get($request);
+                dd($response);
+                $data = json_decode($response->getBody());
 
                 // TODO: 解析 response 的資訊
 
@@ -132,7 +142,7 @@ class TwitterPrimaryService extends BaseService implements SocialCardsContract
     }
 
     /**
-     * 注意: Twitter 的內容如果超過英文 280 字或是中文 140 字的話，多餘的內容將會被 Twitter 自動忽略。
+     * 注意: Telegram 採用 sendPhoto 時，其圖片 Caption 字元長度為 0-1024。
      *
      * @param string $content
      * @return string
@@ -143,7 +153,7 @@ class TwitterPrimaryService extends BaseService implements SocialCardsContract
         $addtags = implode(' ', $options['hashtags']);
 
         // $_content = (mb_strlen($content, 'utf-8') > 20)? mb_substr($content, 0, 20, 'utf-8') . ' ...' : $content;
-        $_content = Str::limit($content, 100, ' ...');
+        $_content = Str::limit($content, 200, ' ...');
 
         return $addtags . "\n\r----------\n\r" .
             $_content . "\n\r----------\n\r" .

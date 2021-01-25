@@ -143,15 +143,19 @@ class PlurkPrimaryService extends BaseService implements SocialCardsContract
         $addtags = implode(' ', $options['hashtags']);
         
         // $_content = (mb_strlen($content, 'utf-8') > 100) ? mb_substr($content, 0, 100, 'utf-8') . ' ...' : $content;
-        $_content = Str::limit($content, 100, ' ...');
+        $_content = Str::limit($content, 200, ' ...');
 
         return $options['image_url'] . "\n\r" .
-            $addtags . "\n\r----------\n\r" .
-            $_content . "\n\r----------\n\r" .
-            '🗳️ [群眾審核] ' . route('frontend.social.cards.review') . '?' . Str::random(4) . "\n\r" .
-            '👉 [GitHub] https://github.com/yklmbbs/mood.schl' . '?' . Str::random(4) . "\n\r" .
-            '📢 [匿名發文] ' . route('frontend.social.cards.create') . '?' . Str::random(4) . "\n\r" .
-            '🥙 [全平台留言] ' . route('frontend.social.cards.show', ['id' => $options['id']]);
+            $addtags . "\n\r\n\r" .
+            $_content;
+
+        // return $options['image_url'] . "\n\r" .
+        //     $addtags . "\n\r----------\n\r" .
+        //     $_content . "\n\r----------\n\r" .
+        //     '🗳️ [群眾審核] ' . route('frontend.social.cards.review') . '?' . Str::random(4) . "\n\r" .
+        //     '👉 [GitHub] https://github.com/yklmbbs/mood.schl' . '?' . Str::random(4) . "\n\r" .
+        //     '📢 [匿名發文] ' . route('frontend.social.cards.create') . '?' . Str::random(4) . "\n\r" .
+        //     '🥙 [全平台留言] ' . route('frontend.social.cards.show', ['id' => $options['id']]);
 
         // return sprintf(
         //     "%s\r\n#純靠北工程師%s\r\n%s\r\n%s\r\n🥙 全平台留言 %s",
