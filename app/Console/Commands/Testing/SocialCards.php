@@ -130,7 +130,7 @@ class SocialCards extends Command
         /**
          * 測試發表文章到社群平台
          */
-        $this->plurkPrimaryMediaCardsService->publish($cards);
+        // $this->plurkPrimaryMediaCardsService->publish($cards);
         // $this->telegramPrimaryMediaCardsService->publish($cards);
         // $this->twitterPrimaryMediaCardsService->publish($cards);
         // $this->facebookPrimaryMediaCardsService->publish($cards);
@@ -140,6 +140,7 @@ class SocialCards extends Command
          * 測試更新文章的 Likes、分享數
          */
         // $this->plurkPrimaryMediaCardsService->update($cards);
+        // $this->telegramPrimaryMediaCardsService->update($cards);
         // $this->twitterPrimaryMediaCardsService->update($cards);
         // dd($this->facebookPrimaryMediaCardsService->update($cards));
         // dd($this->facebookSecondaryMediaCardsService->update($cards));

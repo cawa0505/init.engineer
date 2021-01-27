@@ -34,27 +34,61 @@ body {
 }
 
 /**
+ * Silver 點陣字型
+ */
+@font-face {
+    font-family: 'Silver';
+    src: url('/fonts/Silver.ttf');
+}
+
+/**
  * ZPIX 點陣字型
  */
 @font-face {
-    font-family: 'Zfull';
-    src: url('/fonts/Zfull-GB.ttf');
+    font-family: 'ZPIX';
+    src: url('/fonts/zpix.woff2') format("woff2"),
+        url('/fonts/zpix.woff') format("woff"),
+        url('/fonts/zpix.ttf') format("truetype");
 }
 
 /**
- * 新細明體
+ * 和田研細丸ゴシック
  */
 @font-face {
-    font-family: 'Mingliu';
-    src: url('/fonts/mingliu.ttc');
+    font-family: 'Timemachine Wa';
+    src: url('/fonts/timemachine-wa.ttf');
 }
 
 /**
- * 張海山銳諧體
+ * Cheek ふぉんと
  */
 @font-face {
-    font-family: 'Harmonic';
-    src: url('/fonts/ZHS-Harmonic.ttf');
+    font-family: 'CheekFont';
+    src: url('/fonts/CheekFont-Regular.ttf');
+}
+
+/**
+ * 清松手寫體1
+ */
+@font-face {
+    font-family: 'JasonHandwriting1';
+    src: url('/fonts/JasonHandwriting1.ttf');
+}
+
+/**
+ * CJKFonts手寫4
+ */
+@font-face {
+    font-family: 'CJKFonts Handingwriting4';
+    src: url('/fonts/cjkfonts_handingwriting4.ttf');
+}
+
+/**
+ * CJKFonts全瀨體
+ */
+@font-face {
+    font-family: 'CJKFonts Allseto';
+    src: url('/fonts/cjkFonts_allseto_v1.11.ttf');
 }
 
 /**

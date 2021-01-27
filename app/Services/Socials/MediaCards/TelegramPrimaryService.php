@@ -78,7 +78,19 @@ class TelegramPrimaryService extends BaseService implements SocialCardsContract
         {
             try
             {
-                $response = Telegram::getTweet($mediaCards->social_card_id);
+                $request = sprintf("https://api.telegram.org/bot%s/getMesaage?chat_id=%s&message_id=%d", 
+                config('telegram.bot_token'),
+                config('social.telegram.primary.user_id'),
+                $mediaCards->social_card_id
+        );
+        dd($request);
+        $http = new Client();
+        $response = $http->get($request);
+        dd($response);
+                // $response = Telegram::getMessage([
+                //     'chat_id' => config('social.telegram.primary.user_id'), 
+                //     'message_id' => $mediaCards->social_card_id]);
+                // dd($response);
                 return $this->mediaCardsRepository->update($mediaCards, [
                     'num_like' => $response->favorite_count,
                     'num_share' => $response->retweet_count,
@@ -106,7 +118,7 @@ class TelegramPrimaryService extends BaseService implements SocialCardsContract
             try
             {
                 // Delete Photo not working.
-                $request = sprintf("https://api.telegram.org/bot%s/deleteMesaage?chat_id=%s&message_id=%d", 
+                $request = sprintf("https://api.telegram.org/bot%s/deleteMessages?chat_id=%s&message_id=%d", 
                                     config('telegram.bot_token'),
                                     config('social.telegram.primary.user_id'),
                                     $mediaCards->social_card_id

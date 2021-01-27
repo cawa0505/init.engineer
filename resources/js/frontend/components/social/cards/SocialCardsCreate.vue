@@ -55,7 +55,7 @@
                 <option
                   :class="option.class"
                   v-for="option in theme.options"
-                  v-if="option.enable"
+                  v-show="option.enable"
                   :key="option.value"
                   :value="option.value"
                 >{{ option.text }}</option>
@@ -531,14 +531,39 @@ export default {
             value: "813ca6cbbd95d7e08fa2af59bc12072d"
           },
           {
+            text: "Sliver 點陣字型",
+            font: "Silver",
+            value: "27B9CEBCC87F3E1FAC42DA21B38F08C0"
+          },
+          {
             text: "ZPIX 點陣字型",
-            font: "Zfull",
+            font: "ZPIX",
             value: "1b23b3cd9223930ac694b7f29f38ff21"
           },
           {
-            text: "張海山銳諧體",
-            font: "Harmonic",
-            value: "68068fcf50e7cae709cb8ed0b7b9b0f3"
+            text: "Cheek 高中少女體",
+            font: "CheekFont",
+            value: "5b50cf3b30de1a46b112899f16f6e4bf"
+          },
+          {
+            text: "清松手寫體",
+            font: "JasonHandwriting1",
+            value: "b2b69f4f0055b4a20fd55a650acc60d9"
+          },
+          {
+            text: "CJKFonts手寫4",
+            font: "CJKFonts Handingwriting4",
+            value: "b4d1b9025e1866296299e4aa7dba4639"
+          },
+          {
+            text: "CJKFonts全瀨體",
+            font: "CJKFonts Allseto",
+            value: "6423dac3a45b20e5f01609175de3a291"
+          },
+          {
+            text: "和田研細丸ゴシック",
+            font: "Timemachine Wa",
+            value: "6ACA4ADF916F8D5419E17654D1B3AD80"
           },
           {
             text: "蒙納繁圓點陣",
@@ -549,11 +574,6 @@ export default {
             text: "微軟正黑體",
             font: "Microsoft JhengHei",
             value: "13f5333afe00f8c7e8da7e0b13ec2c94"
-          },
-          {
-            text: "新細明體",
-            font: "Mingliu",
-            value: "c0b5dd764ede0ca105be22cf13ebadff"
           },
           {
             text: "標楷體",
@@ -644,9 +664,11 @@ export default {
       );
       this.canvas.font = font.font;
       const ffo = new FontFaceObserver(font.font);
-      ffo.load().then(
+      var self = this;
+      ffo.load(null, 9000).then(
         function() {
-          console.log("Font is available.");
+          console.log(font.font + " is loaded.");
+          self.drawingAll();
         },
         function() {
           Swal.fire({
@@ -662,8 +684,6 @@ export default {
           });
         }
       );
-
-      this.drawingAll();
     },
     drawingAll() {
       this.resetCanvasView();

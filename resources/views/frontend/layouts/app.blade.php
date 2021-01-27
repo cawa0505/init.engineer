@@ -85,7 +85,7 @@
         {!! script(mix('js/vendor.js')) !!}
         {!! script(mix('js/frontend.js')) !!}
         <!-- Google AdSense -->
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script data-ad-client="ca-pub-4188608440091450" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
         @stack('after-scripts')
 

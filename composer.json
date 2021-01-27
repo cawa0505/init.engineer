@@ -34,6 +34,7 @@
         "spatie/laravel-permission": "^3.0",
         "thujohn/twitter": "^2.3",
         "torann/geoip": "^1.0",
+        "tumblr/tumblr": "dev-master",
         "vinkla/facebook": "^4.0"
     },
     "require-dev": {
