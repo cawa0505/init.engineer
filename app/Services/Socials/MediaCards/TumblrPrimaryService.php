@@ -165,7 +165,7 @@ class TumblrPrimaryService extends BaseService implements SocialCardsContract
         // $_content = Str::limit($content, 200, ' ...');
 
         return [
-            'content' => "<div>" . nl2br($content) . "</div><hr />" .
+            'content' => "<div>" . nl2br($content) . "</div><br /><hr /><br />" .
                             '<p>🗳️ [群眾審核] <a href="' . route('frontend.social.cards.review') . '">' . route('frontend.social.cards.create') . '</a></p>' .
                             '<p>👉 [GitHub] <a href="https://github.com/yklmbbs/mood.schl">yklmbbs/mood.schl</a></p>' .
                             '<p>📢 [匿名發文] <a href="' . route('frontend.social.cards.create') . '">' . route('frontend.social.cards.create') . '</a></p>' .
