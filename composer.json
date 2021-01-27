@@ -30,6 +30,7 @@
         "laravel/socialite": "^4.1",
         "league/fractal": "^0.18.0",
         "qlurk/qlurk": "^0.2.2",
+        "scottybo/laravel-facebook-sdk": "^4",
         "spatie/laravel-html": "^2.22",
         "spatie/laravel-permission": "^3.0",
         "thujohn/twitter": "^2.3",

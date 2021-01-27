@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ef45568b3eef32ae1be7bb86fc25dcfa",
+    "content-hash": "378e5e537eae719e82bc295700d46d82",
     "packages": [
         {
             "name": "albertcht/invisible-recaptcha",
@@ -4631,6 +4631,78 @@
                 "wiki": "https://github.com/ramsey/uuid/wiki"
             },
             "time": "2020-02-21T04:36:14+00:00"
+        },
+        {
+            "name": "scottybo/laravel-facebook-sdk",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/scottybo/laravel-facebook-sdk.git",
+                "reference": "2d1316074d0205cde4be3b3c7b5fb661bbb6e769"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/scottybo/laravel-facebook-sdk/zipball/2d1316074d0205cde4be3b3c7b5fb661bbb6e769",
+                "reference": "2d1316074d0205cde4be3b3c7b5fb661bbb6e769",
+                "shasum": ""
+            },
+            "require": {
+                "facebook/graph-sdk": "^5.0",
+                "illuminate/auth": "~6",
+                "illuminate/config": "~6",
+                "illuminate/database": "~6",
+                "illuminate/routing": "~6",
+                "illuminate/session": "~6",
+                "illuminate/support": "~6",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~4.0|~5.0|~6.0",
+                "squizlabs/php_codesniffer": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Scottybo\\LaravelFacebookSdk\\LaravelFacebookSdkServiceProvider"
+                    ],
+                    "aliases": {
+                        "Facebook": "Scottybo\\LaravelFacebookSdk\\FacebookFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Scottybo\\LaravelFacebookSdk\\": "src/LaravelFacebookSdk"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Scott Bowler",
+                    "email": "scott.bowler@dcsworldwide.net",
+                    "homepage": "https://www.dcsworldwide.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Fully unit tested Facebook SDK v5 integration for Laravel 6.x",
+            "homepage": "https://github.com/scottybo/laravel-facebook-sdk",
+            "keywords": [
+                "facebook",
+                "facebook sdk v4",
+                "facebook sdk v5",
+                "laravel",
+                "lumen",
+                "sdk"
+            ],
+            "support": {
+                "source": "https://github.com/scottybo/laravel-facebook-sdk/tree/4.0.0"
+            },
+            "time": "2019-09-05T08:59:57+00:00"
         },
         {
             "name": "spatie/laravel-html",

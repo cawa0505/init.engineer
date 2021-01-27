@@ -108,11 +108,19 @@ body {
 }
 
 /**
+ * 裝甲明朝體
+ */
+ @font-face {
+    font-family: 'SoukouMincho';
+    src: url('/fonts/SoukouMincho.ttf');
+}
+
+/**
  * 極粗明朝體
  */
 @font-face {
     font-family: 'MatissePro EB';
-    src: url('/fonts/FOT-MatissePro-EB.otf');
+    src: url('/fonts/FOT-MatissePro-EB.otf') format('opentype');
 }
 
 /**

@@ -581,6 +581,11 @@ export default {
             value: "21881fc6a87aca0dd1afc685cb6ee891"
           },
           {
+            text: "裝甲明朝體",
+            font: "SoukouMincho",
+            value: "77169c474432f72879856e6d771b3129"
+          },
+          {
             text: "極粗明朝體",
             font: "MatissePro EB",
             value: "ozke4ri3gkpy7e9c312u5l0w5vr9jdqq"

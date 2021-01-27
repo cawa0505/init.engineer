@@ -2,7 +2,7 @@
     <table class="table table-striped table-bordered bg-img-rock text-white">
         <tr>
             <th>@lang('labels.frontend.user.profile.avatar')</th>
-            <td><img src="{{ $logged_in_user->picture }}" class="user-profile-image rounded" /></td>
+            <td><img src="{{ $logged_in_user->picture }}" class="user-profile-image rounded pixel" /></td>
         </tr>
         <tr>
             <th>@lang('labels.frontend.user.profile.name')</th>

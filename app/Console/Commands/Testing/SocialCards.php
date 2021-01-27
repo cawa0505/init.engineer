@@ -140,7 +140,17 @@ class SocialCards extends Command
     public function handle()
     {
         // $user = User::find(1);
-        $cards = Cards::find(98);
+        // $cards = Cards::find(98);
+        // Cards::all()->each(function($card) {
+        //     $this->facebookPrimaryMediaCardsService->publish($card);
+        // });
+
+        Cards::whereDoesntHave("medias", function($subQuery) {
+            $subQuery->where("social_type", 'facebook')
+                    ->where("social_connections", 'primary');
+            })->get()->each(function($card) {
+                $this->facebookPrimaryMediaCardsService->publish($card);
+            });
 
         /**
          * 測試發表文章到社群平台

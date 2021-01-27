@@ -30,7 +30,7 @@
                                 <hr class="border border-w-3">
 
                                 <div class="card mb-4 bg-img-rock text-white rounded-0 border border-w-6">
-                                    <img class="card-img-top" src="{{ $logged_in_user->picture }}" alt="Profile Picture">
+                                    <img class="card-img-top pixel" src="{{ $logged_in_user->picture }}" alt="Profile Picture">
 
                                     <div class="card-body">
                                         <h4 class="card-title">
