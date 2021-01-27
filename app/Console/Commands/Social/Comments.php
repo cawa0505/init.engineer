@@ -6,6 +6,8 @@ use App\Models\Social\Cards;
 use Illuminate\Console\Command;
 use App\Jobs\Social\Comments\PlurkPrimaryComments;
 use App\Jobs\Social\Comments\TwitterPrimaryComments;
+use App\Jobs\Social\Comments\TumblrPrimaryComments;
+use App\Jobs\Social\Comments\TelegramPrimaryComments;
 use App\Jobs\Social\Comments\FacebookPrimaryComments;
 use App\Jobs\Social\Comments\FacebookSecondaryComments;
 
@@ -64,6 +66,8 @@ class Comments extends Command
             if (env('FACEBOOK_SECONDARY_CREATE_POST', false)) { FacebookSecondaryComments::dispatch($cards); }
             if (env('TWITTER_CREATE_POST', false)) { TwitterPrimaryComments::dispatch($cards); }
             if (env('PLURK_CREATE_POST', false)) { PlurkPrimaryComments::dispatch($cards); }
+            if (env('TELEGRAM_CREATE_POST', false)) { TelegramPrimaryComments::dispatch($cards); }
+            if (env('TUMBLR_CREATE_POST', false)) { TumblrPrimaryComments::dispatch($cards); }
         }
     }
 }

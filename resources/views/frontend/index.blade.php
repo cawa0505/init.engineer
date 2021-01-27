@@ -6,7 +6,7 @@
 <div class="container-fluid">
     <div class="row my-2">
         <div class="col-12 col-md-4 col-lg-3 mx-auto" style="display: flex; flex-direction: column; justify-content: center;">
-            <img class="w-100" src="/img/frontend/banner/logo.png" alt="LOGO">
+            <img class="w-100 pixel" src="/img/frontend/banner/logo.png" alt="LOGO">
         </div>
         <div class="col-12 col-md-8 col-lg-7 mx-auto px-0" style="display: flex; flex-direction: column; justify-content: center;">
             <div class="w-100">

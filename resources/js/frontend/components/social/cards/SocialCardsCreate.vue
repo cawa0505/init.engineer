@@ -541,6 +541,11 @@ export default {
             value: "1b23b3cd9223930ac694b7f29f38ff21"
           },
           {
+            text: "蒙納繁圓點陣",
+            font: "MBitmapRoundHK",
+            value: "f762e3a99692b40e5929ab3668606a4a"
+          },
+          {
             text: "Cheek 高中少女體",
             font: "CheekFont",
             value: "5b50cf3b30de1a46b112899f16f6e4bf"
@@ -564,11 +569,6 @@ export default {
             text: "和田研細丸ゴシック",
             font: "Timemachine Wa",
             value: "6ACA4ADF916F8D5419E17654D1B3AD80"
-          },
-          {
-            text: "蒙納繁圓點陣",
-            font: "MBitmapRoundHK",
-            value: "f762e3a99692b40e5929ab3668606a4a"
           },
           {
             text: "微軟正黑體",
