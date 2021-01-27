@@ -37,3 +37,6 @@ coverage.xml
 *.rnd
 worker.log
 ._*
+
+public/json/social/*
+!.keep
