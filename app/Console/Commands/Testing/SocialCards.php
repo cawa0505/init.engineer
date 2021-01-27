@@ -155,6 +155,7 @@ class SocialCards extends Command
         /**
          * 測試更新文章的 Likes、分享數
          */
+        // $this->tumblrPrimaryMediaCardsService->update($cards);
         // $this->plurkPrimaryMediaCardsService->update($cards);
         // $this->telegramPrimaryMediaCardsService->update($cards);
         // $this->twitterPrimaryMediaCardsService->update($cards);
@@ -164,6 +165,7 @@ class SocialCards extends Command
         /**
          * 測試更新文章的留言
          */
+        // $this->tumblrPrimaryCommentsService->getComments($cards);
         // $this->plurkPrimaryCommentsService->getComments($cards);
         // $this->twitterPrimaryCommentsService->getComments($cards);
         // $this->facebookPrimaryCommentsService->getComments($cards);

@@ -8,8 +8,8 @@ use App\Models\Social\Cards;
 use App\Services\BaseService;
 use App\Exceptions\GeneralException;
 use App\Repositories\Backend\Social\MediaCardsRepository;
-use GuzzleHttp\Client;
 use Illuminate\Support\Str;
+use Tumblr\API\Client as TumblrClient;
 
 /**
  * Class TumblrPrimaryService.
@@ -28,7 +28,7 @@ class TumblrPrimaryService extends BaseService implements SocialCardsContract
     {
         $this->mediaCardsRepository = $mediaCardsRepository;
 
-        $this->tumblr = new \Tumblr\API\Client(config('tumblr.CONSUMER_KEY'), config('tumblr.CONSUMER_SECRET'));
+        $this->tumblr = new TumblrClient(config('tumblr.CONSUMER_KEY'), config('tumblr.CONSUMER_SECRET'));
         $this->tumblr->setToken(config('tumblr.ACCESS_TOKEN'), config('tumblr.ACCESS_TOKEN_SECRET'));
     }
 
@@ -46,7 +46,6 @@ class TumblrPrimaryService extends BaseService implements SocialCardsContract
         {
             try
             {
-
                 $content = $this->buildContent($cards->content, [
                     'id' => $cards->id,
                     'hashtags' => $cards->metadata['hashtags'] ?? [],
@@ -83,26 +82,26 @@ class TumblrPrimaryService extends BaseService implements SocialCardsContract
      */
     public function update(Cards $cards)
     {
-        if ($mediaCards = $this->mediaCardsRepository->findByCardId($cards->id, 'telegram', 'primary'))
+        if ($mediaCards = $this->mediaCardsRepository->findByCardId($cards->id, 'tumblr', 'primary'))
         {
             try
             {
-                $request = sprintf("https://api.telegram.org/bot%s/getMesaage?chat_id=%s&message_id=%d", 
-                config('telegram.bot_token'),
-                config('social.telegram.primary.user_id'),
-                $mediaCards->social_card_id
-        );
-        dd($request);
-        $http = new Client();
-        $response = $http->get($request);
-        dd($response);
-                // $response = Telegram::getMessage([
-                //     'chat_id' => config('social.telegram.primary.user_id'), 
-                //     'message_id' => $mediaCards->social_card_id]);
-                // dd($response);
+                $params = [
+                    'id' => $mediaCards->social_card_id,
+                    'mode' => 'all'
+                ];
+
+                $url = sprintf('v2/blog/%s/notes', config('social.tumblr.primary.user_id'));
+
+                $response = $this->tumblr->getRequest($url, $params, null);
+
+                $count = collect($response->notes)->countBy(function ($item) {
+                    return $item->type;
+                });
+          
                 return $this->mediaCardsRepository->update($mediaCards, [
-                    'num_like' => $response->favorite_count,
-                    'num_share' => $response->retweet_count,
+                    'num_like' => $count['like'],
+                    'num_share' => $count['reblog'],
                 ]);
             }
             catch (Exception $e)
