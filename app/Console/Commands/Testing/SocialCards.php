@@ -11,6 +11,8 @@ use App\Services\Socials\Comments\TwitterPrimaryService as TwitterPrimaryComment
 use App\Services\Socials\MediaCards\TwitterPrimaryService as TwitterPrimaryMediaCardsService;
 use App\Services\Socials\Comments\TelegramPrimaryService as TelegramPrimaryCommentsService;
 use App\Services\Socials\MediaCards\TelegramPrimaryService as TelegramPrimaryMediaCardsService;
+use App\Services\Socials\Comments\TumblrPrimaryService as TumblrPrimaryCommentsService;
+use App\Services\Socials\MediaCards\TumblrPrimaryService as TumblrPrimaryMediaCardsService;
 use App\Services\Socials\Comments\FacebookPrimaryService as FacebookPrimaryCommentsService;
 use App\Services\Socials\MediaCards\FacebookPrimaryService as FacebookPrimaryMediaCardsService;
 use App\Services\Socials\Comments\FacebookSecondaryService as FacebookSecondaryCommentsService;
@@ -51,6 +53,11 @@ class SocialCards extends Command
     protected $telegramPrimaryCommentsService;
 
     /**
+     * @var App\Services\Socials\Comments\TumblrPrimaryService
+     */
+    protected $tumblrPrimaryCommentsService;
+
+    /**
      * @var App\Services\Socials\Comments\FacebookPrimaryService
      */
     protected $facebookPrimaryCommentsService;
@@ -75,6 +82,10 @@ class SocialCards extends Command
      */
     protected $telegramPrimaryMediaCardsService;
 
+    /**
+     * @var App\Services\Socials\MediaCards\TumblrPrimaryService
+     */
+    protected $tumblrPrimaryMediaCardsService;
 
     /**
      * @var App\Services\Socials\MediaCards\FacebookPrimaryService
@@ -98,6 +109,8 @@ class SocialCards extends Command
         TwitterPrimaryMediaCardsService $twitterPrimaryMediaCardsService,
         TelegramPrimaryCommentsService $telegramPrimaryCommentsService,
         TelegramPrimaryMediaCardsService $telegramPrimaryMediaCardsService,
+        TumblrPrimaryCommentsService $tumblrPrimaryCommentsService,
+        TumblrPrimaryMediaCardsService $tumblrPrimaryMediaCardsService,
         FacebookPrimaryCommentsService $facebookPrimaryCommentsService,
         FacebookPrimaryMediaCardsService $facebookPrimaryMediaCardsService,
         FacebookSecondaryCommentsService $facebookSecondaryCommentsService,
@@ -111,6 +124,8 @@ class SocialCards extends Command
         $this->twitterPrimaryMediaCardsService = $twitterPrimaryMediaCardsService;
         $this->telegramPrimaryCommentsService = $telegramPrimaryCommentsService;
         $this->telegramPrimaryMediaCardsService = $telegramPrimaryMediaCardsService;
+        $this->tumblrPrimaryCommentsService = $tumblrPrimaryCommentsService;
+        $this->tumblrPrimaryMediaCardsService = $tumblrPrimaryMediaCardsService;
         $this->facebookPrimaryCommentsService = $facebookPrimaryCommentsService;
         $this->facebookPrimaryMediaCardsService = $facebookPrimaryMediaCardsService;
         $this->facebookSecondaryCommentsService = $facebookSecondaryCommentsService;
@@ -124,12 +139,13 @@ class SocialCards extends Command
      */
     public function handle()
     {
-        // $user = User::find(7);
-        $cards = Cards::find(93);
+        // $user = User::find(1);
+        $cards = Cards::find(98);
 
         /**
          * 測試發表文章到社群平台
          */
+        // $this->tumblrPrimaryMediaCardsService->publish($cards);
         // $this->plurkPrimaryMediaCardsService->publish($cards);
         // $this->telegramPrimaryMediaCardsService->publish($cards);
         // $this->twitterPrimaryMediaCardsService->publish($cards);
@@ -156,6 +172,7 @@ class SocialCards extends Command
         /**
          * 測試刪除社群平台的文章
          */
+        // $this->tumblrPrimaryMediaCardsService->destory($user, $cards, ['remarks' => '刪除測試文章。']);
         // $this->telegramPrimaryMediaCardsService->destory($user, $cards, ['remarks' => '刪除測試文章。']);
         // $this->plurkPrimaryMediaCardsService->destory($user, $cards, ['remarks' => '刪除測試文章。']);
         // $this->twitterPrimaryMediaCardsService->destory($user, $cards, ['remarks' => '刪除測試文章。']);

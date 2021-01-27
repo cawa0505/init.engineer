@@ -7,7 +7,6 @@ use App\Models\Auth\User;
 use App\Models\Social\Cards;
 use App\Services\BaseService;
 use App\Exceptions\GeneralException;
-// use Telegram\Bot\Laravel\Facades\Telegram;
 use App\Repositories\Backend\Social\MediaCardsRepository;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
@@ -28,6 +27,9 @@ class TumblrPrimaryService extends BaseService implements SocialCardsContract
     public function __construct(MediaCardsRepository $mediaCardsRepository)
     {
         $this->mediaCardsRepository = $mediaCardsRepository;
+
+        $this->tumblr = new \Tumblr\API\Client(config('tumblr.CONSUMER_KEY'), config('tumblr.CONSUMER_SECRET'));
+        $this->tumblr->setToken(config('tumblr.ACCESS_TOKEN'), config('tumblr.ACCESS_TOKEN_SECRET'));
     }
 
     /**
@@ -36,7 +38,7 @@ class TumblrPrimaryService extends BaseService implements SocialCardsContract
      */
     public function publish(Cards $cards)
     {
-        if ($this->mediaCardsRepository->findByCardId($cards->id, 'telegram', 'primary'))
+        if ($this->mediaCardsRepository->findByCardId($cards->id, 'tumblr', 'primary'))
         {
             throw new GeneralException(__('exceptions.backend.social.media.cards.repeated_error'));
         }
@@ -44,21 +46,28 @@ class TumblrPrimaryService extends BaseService implements SocialCardsContract
         {
             try
             {
-                $response = Telegram::sendPhoto([
-                    'chat_id' => config('social.telegram.primary.user_id'), 
-                    'photo' => $cards->images->first()->getPicture(), 
-                    'caption' => $this->buildContent($cards->content, [
-                        'id' => $cards->id,
-                        'hashtags' => $cards->metadata['hashtags'] ?? [],
-                    ])
-                  ]);
-                
+
+                $content = $this->buildContent($cards->content, [
+                    'id' => $cards->id,
+                    'hashtags' => $cards->metadata['hashtags'] ?? [],
+                ]);
+
+                $photoPost = [
+                    'data' => $cards->images->first()->getPicture(),
+                    'type' => 'photo',
+                    'format' => 'html',
+                    'caption' => $content['content'],
+                    'tags' => $content['tags']
+                ];
+
+                $response = $this->tumblr->createPost(config('social.tumblr.primary.user_id'), $photoPost);
+
                 return $this->mediaCardsRepository->create([
                     'card_id' => $cards->id,
                     'model_id' => $cards->model_id,
-                    'social_type' => 'telegram',
+                    'social_type' => 'tumblr',
                     'social_connections' => 'primary',
-                    'social_card_id' => $response['message_id'],
+                    'social_card_id' => $response->id,
                 ]);
             }
             catch (Exception $e)
@@ -113,22 +122,15 @@ class TumblrPrimaryService extends BaseService implements SocialCardsContract
      */
     public function destory(User $user, Cards $cards, array $options)
     {
-        if ($mediaCards = $this->mediaCardsRepository->findByCardId($cards->id, 'telegram', 'primary'))
+        if ($mediaCards = $this->mediaCardsRepository->findByCardId($cards->id, 'tumblr', 'primary'))
         {
             try
             {
-                // Delete Photo not working.
-                $request = sprintf("https://api.telegram.org/bot%s/deleteMessages?chat_id=%s&message_id=%d", 
-                                    config('telegram.bot_token'),
-                                    config('social.telegram.primary.user_id'),
-                                    $mediaCards->social_card_id
-                            );
-                            dd($request);
-                // $response = Telegram::deleteMessage($mediaCards->social_card_id);
-                $http = new Client();
-                $response = $http->get($request);
-                dd($response);
-                $data = json_decode($response->getBody());
+                $response = $this->tumblr->deletePost(
+                    config('social.tumblr.primary.user_id'), 
+                    $mediaCards->social_card_id,
+                    $mediaCards->social_card_id
+                );
 
                 // TODO: 解析 response 的資訊
 
@@ -140,10 +142,6 @@ class TumblrPrimaryService extends BaseService implements SocialCardsContract
                     'banned_at' => now(),
                 ]);
             }
-            catch (\Facebook\Exceptions\FacebookSDKException $e)
-            {
-                \Log::error($e->getMessage());
-            }
             catch (Exception $e)
             {
                 \Log::error($e->getMessage());
@@ -154,7 +152,7 @@ class TumblrPrimaryService extends BaseService implements SocialCardsContract
     }
 
     /**
-     * 注意: Telegram 採用 sendPhoto 時，其圖片 Caption 字元長度為 0-1024。
+     * 
      *
      * @param string $content
      * @return string
@@ -162,14 +160,19 @@ class TumblrPrimaryService extends BaseService implements SocialCardsContract
     public function buildContent($content = '', array $options = [])
     {
         $options['hashtags'][] = '#情緒泥巴YKLM' .  base_convert($options['id'], 10, 36);
-        $addtags = implode(' ', $options['hashtags']);
+        $addtags = implode(', ', $options['hashtags']);
 
         // $_content = (mb_strlen($content, 'utf-8') > 20)? mb_substr($content, 0, 20, 'utf-8') . ' ...' : $content;
-        $_content = Str::limit($content, 200, ' ...');
+        // $_content = Str::limit($content, 200, ' ...');
 
-        return $addtags . "\n\r----------\n\r" .
-            $_content . "\n\r----------\n\r" .
-            '📢 [匿名發文] ' . route('frontend.social.cards.create') . "\n\r";
+        return [
+            'content' => "<div>" . nl2br($content) . "</div><hr />" .
+                            '<p>🗳️ [群眾審核] <a href="' . route('frontend.social.cards.review') . '">' . route('frontend.social.cards.create') . '</a></p>' .
+                            '<p>👉 [GitHub] <a href="https://github.com/yklmbbs/mood.schl">yklmbbs/mood.schl</a></p>' .
+                            '<p>📢 [匿名發文] <a href="' . route('frontend.social.cards.create') . '">' . route('frontend.social.cards.create') . '</a></p>' .
+                            '<p>🥙 [全平台留言] <a href="' . route('frontend.social.cards.show', ['id' => $options['id']]) . '">' . route('frontend.social.cards.show', ['id' => $options['id']]) . '</a></p>',
+            'tags' => $addtags,
+        ];
 
         // return $addtags . "\n\r----------\n\r" .
         //     $_content . "\n\r----------\n\r" .

@@ -8,8 +8,11 @@ use App\Services\BaseService;
 use App\Jobs\Social\MediaCards\PlurkPrimaryDestory;
 use App\Jobs\Social\MediaCards\PlurkPrimaryPublish;
 use App\Jobs\Social\MediaCards\TwitterPrimaryPublish;
-use App\Jobs\Social\MediaCards\TelegramPrimaryPublish;
 use App\Jobs\Social\MediaCards\TwitterPrimaryDestory;
+use App\Jobs\Social\MediaCards\TelegramPrimaryPublish;
+use App\Jobs\Social\MediaCards\TelegramPrimaryDestory;
+use App\Jobs\Social\MediaCards\TumblrPrimaryPublish;
+use App\Jobs\Social\MediaCards\TumblrPrimaryDestory;
 use App\Jobs\Social\MediaCards\FacebookPrimaryDestory;
 use App\Jobs\Social\MediaCards\FacebookPrimaryPublish;
 use App\Jobs\Social\MediaCards\FacebookSecondaryDestory;
@@ -55,6 +58,9 @@ class CardsService extends BaseService implements CardsContract
         }
         if (env('TELEGRAM_CREATE_POST', false) && (! $this->mediaCardsRepository->findByCardId($cards->id, 'telegram', 'primary'))) {
             TelegramPrimaryPublish::dispatch($cards);
+        }
+        if (env('TUMBLR_CREATE_POST', false) && (! $this->mediaCardsRepository->findByCardId($cards->id, 'tumblr', 'primary'))) {
+            TumblrPrimaryPublish::dispatch($cards);
         }
     }
 

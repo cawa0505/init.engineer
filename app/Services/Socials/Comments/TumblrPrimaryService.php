@@ -5,19 +5,18 @@ namespace App\Services\Socials\Comments;
 use App\Models\Social\Cards;
 use App\Services\BaseService;
 use App\Exceptions\GeneralException;
-use ReliqArts\Thujohn\Twitter\Facades\Twitter;
 use App\Repositories\Backend\Social\CommentsRepository;
 use App\Repositories\Backend\Social\MediaCardsRepository;
 
 /**
- * Class TelegramPrimaryService.
+ * Class TumblrPrimaryService.
  */
-class TelegramPrimaryService extends BaseService implements SocialCardsContract
+class TumblrPrimaryService extends BaseService implements SocialCardsContract
 {
     /**
      * @var Twitter
      */
-    protected $twitter;
+    // protected $twitter;
 
     /**
      * @var CommentsRepository
