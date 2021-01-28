@@ -56,6 +56,7 @@ class FacebookPrimaryService extends BaseService implements SocialCardsContract
                     [
                         'message' => $this->buildContent($cards->content, [
                             'id' => $cards->id,
+                            'hashtags' => $cards->metadata['hashtags'] ?? [],
                         ]),
                         'source' => $this->facebook->fileToUpload($cards->images->first()->getPicture()),
                     ],
@@ -146,10 +147,13 @@ class FacebookPrimaryService extends BaseService implements SocialCardsContract
      */
     public function buildContent($content = '', array $options = [])
     {
-        return '#純靠北工程師' . base_convert($options['id'], 10, 36) . "\n\r----------\n\r" .
+        $options['hashtags'][] = '#情緒泥巴YKLM' .  base_convert($options['id'], 10, 36);
+        $addtags = implode(' ', $options['hashtags']);
+
+        return $addtags .
             $content . "\n\r----------\n\r" .
             '🗳️ [群眾審核] ' . route('frontend.social.cards.review') . "\n\r" .
-            '👉 [GitHub Repo] https://github.com/init-engineer/init.engineer' . "\n\r" .
+            '👉 [GitHub] https://github.com/yklmbbs/mood.schl' . "\n\r" .
             '📢 [匿名發文] ' . route('frontend.social.cards.create') . "\n\r" .
             '🥙 [全平台留言] ' . route('frontend.social.cards.show', ['id' => $options['id']]);
 

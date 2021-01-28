@@ -140,10 +140,6 @@ class TelegramPrimaryService extends BaseService implements SocialCardsContract
                     'banned_at' => now(),
                 ]);
             }
-            catch (\Facebook\Exceptions\FacebookSDKException $e)
-            {
-                \Log::error($e->getMessage());
-            }
             catch (Exception $e)
             {
                 \Log::error($e->getMessage());
