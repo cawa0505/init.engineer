@@ -107,7 +107,7 @@ class CardsController extends Controller
         } else {
             $avatar = $this->imagesService->buildImage($request->only('content', 'themeStyle', 'fontStyle', 'isFeatureToBeCoutinued', 'isManagerLine'), $modelCard);
         }
-        
+
         // $avatar = $request->has('avatar')?
         //     $this->imagesService->uploadImage([], $request->file('avatar')) :
         //     $this->imagesService->buildImage($request->only('content', 'themeStyle', 'fontStyle', 'isFeatureToBeCoutinued', 'isManagerLine'));

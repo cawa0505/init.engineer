@@ -150,7 +150,7 @@ class FacebookPrimaryService extends BaseService implements SocialCardsContract
         $options['hashtags'][] = '#情緒泥巴YKLM' .  base_convert($options['id'], 10, 36);
         $addtags = implode(' ', $options['hashtags']);
 
-        return $addtags .
+        return $addtags . "\n\r----------\n\r" .
             $content . "\n\r----------\n\r" .
             '🗳️ [群眾審核] ' . route('frontend.social.cards.review') . "\n\r" .
             '👉 [GitHub] https://github.com/yklmbbs/mood.schl' . "\n\r" .
@@ -196,13 +196,15 @@ class FacebookPrimaryService extends BaseService implements SocialCardsContract
 
         $facebookRequest = new FacebookRequest(
             $facebookApp,
-            $this->facebook->getDefaultAccessToken()->getValue(),
+            \Storage::disk('backups')->get('facebookPrimaryToken.key') ?: $this->facebook->getDefaultAccessToken()->getValue(),
             'GET',
             config('facebook.connections.primary.user_id', 'FACEBOOK_CONNECTIONS_PRIMARY_USER_ID'),
             ['fields' => 'access_token']
         );
 
         $accessToken = $this->facebook->getClient()->sendRequest($facebookRequest)->getDecodedBody();
+        \Storage::disk('backups')->put('facebookPrimaryToken.key', $accessToken['access_token']);
+
         $foreverPageAccessToken = $accessToken['access_token'];
         $this->facebook->setDefaultAccessToken($foreverPageAccessToken);
     }
