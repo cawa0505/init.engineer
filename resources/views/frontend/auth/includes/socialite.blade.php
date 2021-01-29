@@ -21,3 +21,7 @@
 @if (config('services.twitter.active'))
     <a href='{{ route('frontend.auth.social.login', 'twitter') }}' class='btn btn-lg btn-block btn-twitter rounded border border-w-3 p-2'><i class='fab fa-twitter'></i> @lang('labels.frontend.auth.login_with', ['social_media' => 'Twitter'])</a>
 @endif
+
+@if (config('services.mastodon.active'))
+    <a href='{{ route('frontend.auth.social.login', 'mastodon') }}' class='btn btn-lg btn-block btn-mastodon rounded border border-w-3 p-2'><i class='fab fa-mastodon'></i> @lang('labels.frontend.auth.login_with', ['social_media' => 'Mastodon'])</a>
+@endif

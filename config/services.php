@@ -95,4 +95,14 @@ return [
         'scopes' => [],
         'with' => [],
     ],
+
+    'mastodon' => [
+        'active'        => env('MASTODON_ACTIVE'),
+        'domain'        => env('MASTODON_DOMAIN'),
+        'client_id'     => env('MASTODON_ID'),
+        'client_secret' => env('MASTODON_SECRET'),
+        'redirect'      => env('MASTODON_REDIRECT'),
+        //'read', 'write', 'follow'
+        'scope'         => ['read'],
+    ],
 ];
