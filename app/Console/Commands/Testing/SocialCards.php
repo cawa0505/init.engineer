@@ -140,7 +140,7 @@ class SocialCards extends Command
     public function handle()
     {
         // $user = User::find(1);
-        $cards = Cards::find(66);
+        $cards = Cards::find(108);
 
         // Cards::all()->each(function($card) {
         //     $this->facebookPrimaryMediaCardsService->publish($card);
