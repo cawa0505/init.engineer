@@ -581,6 +581,16 @@ export default {
             value: "21881fc6a87aca0dd1afc685cb6ee891"
           },
           {
+            text: "新細明體",
+            font: "Mingliu",
+            value: "c0b5dd764ede0ca105be22cf13ebadff"
+          },
+          {
+            text: "張海山銳諧體",
+            font: "Harmonic",
+            value: "68068fcf50e7cae709cb8ed0b7b9b0f3"
+          },
+          {
             text: "裝甲明朝體",
             font: "SoukouMincho",
             value: "77169c474432f72879856e6d771b3129"

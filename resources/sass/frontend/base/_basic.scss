@@ -132,6 +132,24 @@ body {
 }
 
 /**
+ * 新細明體
+ */
+ @font-face {
+    font-family: 'Mingliu';
+    src: url('/fonts/PMingLiU.ttf');
+}
+
+/**
+ * 張海山銳諧體
+ */
+@font-face {
+    font-family: 'Harmonic';
+    src: url('/fonts/ZHS-Harmonic.ttf') format('truetype'), 
+        url('/fonts/ZHS-Harmonic.woff2') format('woff2'),
+        url('/fonts/ZHS-Harmonic.woff') format('woff');
+}
+
+/**
  * DOS
  * 只支援英文、數字
  */
