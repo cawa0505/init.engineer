@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\View;
 use App\Http\Composers\GlobalComposer;
 use Illuminate\Support\ServiceProvider;
 use App\Http\Composers\Backend\SidebarComposer;
+use App\Http\Composers\Frontend\WxComposer;
 
 /**
  * Class ComposerServiceProvider.
@@ -25,6 +26,11 @@ class ComposerServiceProvider extends ServiceProvider
         );
 
         // Frontend
+        View::composer(
+            // This binds items like number of users pending approval when account approval is set to true
+            'frontend.includes.nav',
+            WxComposer::class
+        );
 
         // Backend
         View::composer(
