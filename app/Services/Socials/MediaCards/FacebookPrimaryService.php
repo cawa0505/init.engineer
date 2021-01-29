@@ -34,7 +34,7 @@ class FacebookPrimaryService extends BaseService implements SocialCardsContract
     {
         $this->mediaCardsRepository = $mediaCardsRepository;
         $this->facebook = Facebook::connection('primary');
-        $this->facebook->setDefaultAccessToken(\Storage::disk('backups')->get('facebookPrimaryToken.key'));
+        // $this->facebook->setDefaultAccessToken(\Storage::disk('backups')->get('facebookPrimaryToken.key'));
     }
 
     /**

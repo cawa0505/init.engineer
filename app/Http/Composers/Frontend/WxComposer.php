@@ -31,10 +31,7 @@ class WxComposer
             ]);
 
             $content = json_decode($res->getBody()->getContents());
-            $day = $content->records->location[0]->weatherElement[0]->time[1]->parameter->parameterName;
-            $night = $content->records->location[0]->weatherElement[0]->time[2]->parameter->parameterName;
-    
-            $weatherNow = (int)\Carbon\Carbon::now()->format('H') < 18 ? $day : $night;
+            $weatherNow = $content->records->location[0]->weatherElement[0]->time[0]->parameter->parameterName;
         }
         catch (\Exception $e)
         {
