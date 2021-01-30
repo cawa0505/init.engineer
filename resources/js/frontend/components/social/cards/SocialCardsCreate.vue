@@ -449,7 +449,7 @@ export default {
             text: "Windows 最棒的畫面",
             class: "bg-windows-10-error text-white",
             value: "32d2a897602ef652ed8e15d66128aa74",
-            enable: false,
+            enable: true,
             color: {
               background: "#007BD0",
               text: "#F8F9FA"
@@ -459,7 +459,7 @@ export default {
             text: "Windows 最棒的畫面 測試人員組件",
             class: "bg-windows-10-testing-error text-white",
             value: "tumx453xqZLjf5kaFFBzNj4gqVXKWqXz",
-            enable: false,
+            enable: true,
             color: {
               background: "#107C10",
               text: "#F8F9FA"
@@ -641,7 +641,10 @@ export default {
     },
     'canvas.feature.is_to_be_continued': function(val) {
       this.drawingAll();
-    }
+    },
+    'canvas.font': function(val) {
+      this.drawingAll();
+    },
   },
   methods: {
     onAvatarChange(avatar) {
@@ -677,7 +680,6 @@ export default {
       const font = this.font.options.find(
         option => option.value === this.font.selector
       );
-      this.canvas.font = font.font;
       const ffo = new FontFaceObserver(font.font);
       var self = this;
       ffo.load(null, 9000).then(
@@ -699,6 +701,8 @@ export default {
           });
         }
       );
+
+      this.canvas.font = font.font;
     },
     drawingAll() {
       this.resetCanvasView();
@@ -759,34 +763,48 @@ export default {
     },
     drawingFeature() {
       let img = new Image();
+      let self = this;
       if (this.canvas.feature.is_to_be_continued) {
         img.src = "/img/frontend/cards/to_be_continued.png";
-        this.canvas.ctx.drawImage(img, 24, this.canvas.view.height - 240);
+        img.onload = function () {
+          self.canvas.ctx.drawImage(img, 24, self.canvas.view.height - 240);
+        }
       }
     },
     drawingBackgroundImage() {
       let img = new Image();
+      let self = this;
       switch (this.theme.selector) {
         case "05217b7d4741e38096a54eff4226c217":
           img.src = "/img/frontend/cards/devotion-bg.png";
-          this.canvas.ctx.drawImage(img, 360, 64);
+          img.onload = function () {
+            self.canvas.ctx.drawImage(img, 360, 64);
+          }
           return;
 
         case "32d2a897602ef652ed8e15d66128aa74":
           img.src = "/img/frontend/cards/qrcode.png";
-          this.canvas.ctx.drawImage(img, 24, this.canvas.height - 204);
+          img.onload = function () {
+            self.canvas.ctx.drawImage(img, 24, self.canvas.height - 204);
+          }
           return;
 
         case "tumx453xqZLjf5kaFFBzNj4gqVXKWqXz":
           img.src = "/img/frontend/cards/qrcode.png";
-          this.canvas.ctx.drawImage(img, 24, this.canvas.height - 204);
+          img.onload = function () {
+            self.canvas.ctx.drawImage(img, 24, self.canvas.height - 204);
+          }
           return;
 
         case "05326525f82b9a036e1bcb53a392ff7c":
           img.src = "/img/frontend/cards/fragmented_background.png";
-          this.canvas.ctx.drawImage(img, 0, this.canvas.height - 560);
+          img.onload = function () {
+            self.canvas.ctx.drawImage(img, 0, self.canvas.height - 560);
+          }
           img.src = "/img/frontend/cards/fragmented_people.png";
-          this.canvas.ctx.drawImage(img, 36, this.canvas.height - 542);
+          img.onload = function () {
+            self.canvas.ctx.drawImage(img, 36, self.canvas.height - 542);
+          }
           this.canvas.ctx.lineJoin = "round";
           this.canvas.ctx.lineWidth = 8;
           this.canvas.ctx.strokeRect(
@@ -803,7 +821,9 @@ export default {
           );
           img.src = "/img/frontend/cards/fragmented_background_arrow.png";
           // img.src = "https://i.imgur.com/8kMDGcA.png";
-          this.canvas.ctx.drawImage(img, 312, this.canvas.height - 388);
+          img.onload = function () {
+            self.canvas.ctx.drawImage(img, 312, self.canvas.height - 388);
+          }
           return;
       }
     },
@@ -818,12 +838,12 @@ export default {
             this.canvas.height - 160
           );
           this.canvas.ctx.fillText(
-            "純靠北工程師 0xKAOBEI_ENGINEER",
+            "情緒泥巴 0xMOODS_YKLM",
             228,
             this.canvas.height - 120
           );
           this.canvas.ctx.fillText(
-            "請訪問 https://kaobei.engineer",
+            "請訪問 " + process.env.MIX_APP_URL,
             228,
             this.canvas.height - 40
           );
@@ -838,7 +858,7 @@ export default {
             this.canvas.height - 160
           );
           this.canvas.ctx.fillText(
-            "純靠北工程師 0xKAOBEI_ENGINEER",
+            "情緒泥巴 0xMOODS_YKLM",
             228,
             this.canvas.height - 120
           );

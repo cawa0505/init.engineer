@@ -249,6 +249,21 @@ a, span, button {
         }
     }
 
+    &.btn-tumblr {
+        color: white;
+        background-color: #2c4762;
+
+        &:active {
+            color: darkgrey;
+            background-color:#1c2d3f
+        }
+
+        &:hover {
+            color: white;
+            background-color:#1c2d3f;
+        }
+    }
+
     &.btn-orange {
         color: white;
         background-color: #FD7E14;

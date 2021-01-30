@@ -20,7 +20,7 @@ trait MediaCardsMethod
      */
     public function isPublish()
     {
-        return ! $this->is_banned;
+        return $this->is_banned;
     }
 
     /**
