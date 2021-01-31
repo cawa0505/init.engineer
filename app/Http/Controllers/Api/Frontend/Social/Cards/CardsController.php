@@ -6,6 +6,9 @@ use League\Fractal\Manager;
 use League\Fractal\Resource\Item;
 use League\Fractal\Resource\Collection;
 
+use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 use App\Models\Social\Cards;
 
 use App\Services\Socials\Cards\CardsService;
@@ -218,4 +221,24 @@ class CardsController extends Controller
 
         return response()->json($response->toArray());
     }
+
+    /**
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function qrcode(Request $request)
+    {
+        $image = QrCode::format('png')
+                        ->margin(2)->size(180)->errorCorrection('H')
+                        ->merge(public_path('img/frontend/cards/avataaars.png'), .3, true)
+                        ->color(0, 0, 0, 55)
+                        ->eye('circle')
+                        // ->color(150,90,10)->backgroundColor(10,14,244)
+                        ->Style('round')->generate(env('APP_URL'));
+
+        return response()->json("data:image/png;base64," . base64_encode($image));
+
+    }
+
 }

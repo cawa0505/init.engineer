@@ -262,6 +262,7 @@ export default {
   },
   data() {
     return {
+      qrcodeImg: null,
       checked: false,
       canvas: {
         view: null,
@@ -609,9 +610,6 @@ export default {
       }
     };
   },
-  mounted() {
-    this.drawingAll();
-  },
   validations: {
     canvas: {
       content: {
@@ -635,18 +633,16 @@ export default {
       }
     }
   },
-  watch: {
-    'canvas.is_manager_line': function(val) {
-      this.drawingAll();
-    },
-    'canvas.feature.is_to_be_continued': function(val) {
-      this.drawingAll();
-    },
-    'canvas.font': function(val) {
-      this.drawingAll();
-    },
-  },
   methods: {
+    async getQRCode() {
+      axios
+        .get("/api/frontend/social/cards/token/qrcode")
+        .then((response) => {
+          this.qrcodeImg = response.data
+          // return response.data;
+        })
+        .catch((error) => console.log(error));
+    },
     onAvatarChange(avatar) {
       console.log("New picture selected!");
       if (avatar) {
@@ -783,14 +779,16 @@ export default {
           return;
 
         case "32d2a897602ef652ed8e15d66128aa74":
-          img.src = "/img/frontend/cards/qrcode.png";
+          // img.src = "/img/frontend/cards/qrcode.png";
+          img.src = this.qrcodeImg;
           img.onload = function () {
             self.canvas.ctx.drawImage(img, 24, self.canvas.height - 204);
           }
           return;
 
         case "tumx453xqZLjf5kaFFBzNj4gqVXKWqXz":
-          img.src = "/img/frontend/cards/qrcode.png";
+          // img.src = "/img/frontend/cards/qrcode.png";
+          img.src = this.qrcodeImg;
           img.onload = function () {
             self.canvas.ctx.drawImage(img, 24, self.canvas.height - 204);
           }
@@ -1120,6 +1118,23 @@ export default {
         }
       });
     }
+  },
+  created () {
+    this.getQRCode();
+  },
+  mounted() {
+    this.drawingAll();
+  },
+  watch: {
+    'canvas.is_manager_line': function(val) {
+      this.drawingAll();
+    },
+    'canvas.feature.is_to_be_continued': function(val) {
+      this.drawingAll();
+    },
+    'canvas.font': function(val) {
+      this.drawingAll();
+    },
   }
 };
 </script>

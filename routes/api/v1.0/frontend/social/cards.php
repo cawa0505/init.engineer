@@ -40,6 +40,8 @@ Route::group([
             ], function () {
                 Route::get('/dashboard', [CardsController::class, 'dashboard'])->name('dashboard');
                 Route::post('/publish', [CardsController::class, 'store'])->name('store');
+                // QRCode Generate Tool
+                Route::get('/qrcode', [CardsController::class, 'qrcode'])->name('qrcode');
 
                 /**
                  * All route names are prefixed with 'api.frontend.social.cards.review'.

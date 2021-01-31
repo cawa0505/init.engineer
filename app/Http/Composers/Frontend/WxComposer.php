@@ -6,7 +6,7 @@ use Illuminate\View\View;
 use GuzzleHttp\Client;
 
 /**
- * Class UnusedPassword.
+ * Class WxComposer.
  */
 class WxComposer
 {
