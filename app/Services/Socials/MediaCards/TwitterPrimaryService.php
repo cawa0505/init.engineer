@@ -147,7 +147,8 @@ class TwitterPrimaryService extends BaseService implements SocialCardsContract
 
         return $addtags . "\n\r----------\n\r" .
             $_content . "\n\r----------\n\r" .
-            '📢 [匿名發文] ' . route('frontend.social.cards.create') . "\n\r";
+            '📢 [匿名發文] ' . route('frontend.social.cards.create') . "\n\r" .
+            '🥙 [完整內容] ' . route('frontend.social.cards.show', ['id' => $options['id']]);
 
         // return $addtags . "\n\r----------\n\r" .
         //     $_content . "\n\r----------\n\r" .
