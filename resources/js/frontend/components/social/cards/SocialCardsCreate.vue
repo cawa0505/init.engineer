@@ -686,8 +686,7 @@ export default {
       ffo.load(null, 9000).then(
         function() {
           console.log(font.font + " is loaded.");
-          this.canvas.font = font.font;
-          // this.drawingAll();
+          this.drawingAll();
         }.bind(this),
         function() {
           Swal.fire({
@@ -703,6 +702,7 @@ export default {
           });
         }
       );
+      this.canvas.font = font.font;
     },
     drawingAll() {
       this.resetCanvasView();
