@@ -437,13 +437,13 @@ export default {
             }
           },
           {
-            text: "恭迎慈孤觀音 渡世靈顯四方",
-            class: "bg-devotion text-dark",
-            value: "05217b7d4741e38096a54eff4226c217",
-            enable: false,
+            text: "粉紅色",
+            class: "bg-pink-secondary color-pink",
+            value: "j874kwoxi2nh64yt67wtphy9m5dmea4q",
+            enable: true,
             color: {
-              background: "#F11541",
-              text: "#000000"
+              background: "#F8C0C8",
+              text: "#FF5376"
             }
           },
           {
@@ -467,13 +467,13 @@ export default {
             }
           },
           {
-            text: "粉紅色",
-            class: "bg-pink-secondary color-pink",
-            value: "j874kwoxi2nh64yt67wtphy9m5dmea4q",
-            enable: true,
+            text: "恭迎慈孤觀音 渡世靈顯四方",
+            class: "bg-devotion text-dark",
+            value: "05217b7d4741e38096a54eff4226c217",
+            enable: false,
             color: {
-              background: "#F8C0C8",
-              text: "#FF5376"
+              background: "#F11541",
+              text: "#000000"
             }
           },
           {
@@ -491,6 +491,11 @@ export default {
       hashtag: {
         selector: "#feeling",
         options: [
+          {
+            text: "八卦",
+            value: "#gossip",
+            board: "Chat"
+          },
           {
             text: "打屁",
             value: "#chat",
@@ -638,8 +643,9 @@ export default {
       axios
         .get("/api/frontend/social/cards/token/qrcode")
         .then((response) => {
-          this.qrcodeImg = response.data
-          // return response.data;
+          this.qrcodeImg = response.data;
+          console.log(response);
+          return response.data;
         })
         .catch((error) => console.log(error));
     },
@@ -677,12 +683,12 @@ export default {
         option => option.value === this.font.selector
       );
       const ffo = new FontFaceObserver(font.font);
-      var self = this;
       ffo.load(null, 9000).then(
         function() {
           console.log(font.font + " is loaded.");
-          self.drawingAll();
-        },
+          this.canvas.font = font.font;
+          // this.drawingAll();
+        }.bind(this),
         function() {
           Swal.fire({
             title: "字體需要一點時間載入，載入完成後將會自動替換字體。",
@@ -697,8 +703,6 @@ export default {
           });
         }
       );
-
-      this.canvas.font = font.font;
     },
     drawingAll() {
       this.resetCanvasView();
@@ -759,94 +763,66 @@ export default {
     },
     drawingFeature() {
       let img = new Image();
-      let self = this;
       if (this.canvas.feature.is_to_be_continued) {
         img.src = "/img/frontend/cards/to_be_continued.png";
         img.onload = function () {
-          self.canvas.ctx.drawImage(img, 24, self.canvas.view.height - 240);
-        }
+          this.canvas.ctx.drawImage(img, 24, this.canvas.view.height - 240);
+        }.bind(this);
       }
     },
     drawingBackgroundImage() {
       let img = new Image();
-      let self = this;
       switch (this.theme.selector) {
         case "05217b7d4741e38096a54eff4226c217":
           img.src = "/img/frontend/cards/devotion-bg.png";
           img.onload = function () {
-            self.canvas.ctx.drawImage(img, 360, 64);
-          }
+            this.canvas.ctx.drawImage(img, 360, 64);
+          }.bind(this);
           return;
 
         case "32d2a897602ef652ed8e15d66128aa74":
-          // img.src = "/img/frontend/cards/qrcode.png";
-          img.src = this.qrcodeImg;
-          img.onload = function () {
-            self.canvas.ctx.drawImage(img, 24, self.canvas.height - 204);
-          }
-          return;
-
         case "tumx453xqZLjf5kaFFBzNj4gqVXKWqXz":
           // img.src = "/img/frontend/cards/qrcode.png";
           img.src = this.qrcodeImg;
           img.onload = function () {
-            self.canvas.ctx.drawImage(img, 24, self.canvas.height - 204);
-          }
+            this.canvas.ctx.drawImage(img, 24, this.canvas.height - 204);
+          }.bind(this);
           return;
 
-        case "05326525f82b9a036e1bcb53a392ff7c":
-          img.src = "/img/frontend/cards/fragmented_background.png";
-          img.onload = function () {
-            self.canvas.ctx.drawImage(img, 0, self.canvas.height - 560);
-          }
-          img.src = "/img/frontend/cards/fragmented_people.png";
-          img.onload = function () {
-            self.canvas.ctx.drawImage(img, 36, self.canvas.height - 542);
-          }
-          this.canvas.ctx.lineJoin = "round";
-          this.canvas.ctx.lineWidth = 8;
-          this.canvas.ctx.strokeRect(
-            353,
-            40,
-            this.canvas.width - 381,
-            this.canvas.height - 282
-          );
-          this.canvas.ctx.fillRect(
-            357,
-            44,
-            this.canvas.width - 389,
-            this.canvas.height - 290
-          );
-          img.src = "/img/frontend/cards/fragmented_background_arrow.png";
-          // img.src = "https://i.imgur.com/8kMDGcA.png";
-          img.onload = function () {
-            self.canvas.ctx.drawImage(img, 312, self.canvas.height - 388);
-          }
-          return;
+        // case "05326525f82b9a036e1bcb53a392ff7c":
+        //   img.src = "/img/frontend/cards/fragmented_background.png";
+        //   img.onload = function () {
+        //     self.canvas.ctx.drawImage(img, 0, self.canvas.height - 560);
+        //   }
+        //   img.src = "/img/frontend/cards/fragmented_people.png";
+        //   img.onload = function () {
+        //     self.canvas.ctx.drawImage(img, 36, self.canvas.height - 542);
+        //   }
+        //   this.canvas.ctx.lineJoin = "round";
+        //   this.canvas.ctx.lineWidth = 8;
+        //   this.canvas.ctx.strokeRect(
+        //     353,
+        //     40,
+        //     this.canvas.width - 381,
+        //     this.canvas.height - 282
+        //   );
+        //   this.canvas.ctx.fillRect(
+        //     357,
+        //     44,
+        //     this.canvas.width - 389,
+        //     this.canvas.height - 290
+        //   );
+        //   img.src = "/img/frontend/cards/fragmented_background_arrow.png";
+        //   // img.src = "https://i.imgur.com/8kMDGcA.png";
+        //   img.onload = function () {
+        //     self.canvas.ctx.drawImage(img, 312, self.canvas.height - 388);
+        //   }
+        //   return;
       }
     },
     drawingLogo() {
       switch (this.theme.selector) {
         case "32d2a897602ef652ed8e15d66128aa74":
-          this.canvas.ctx.font = "36px " + this.canvas.font;
-          this.canvas.ctx.fillStyle = this.canvas.color;
-          this.canvas.ctx.fillText(
-            "若要深入了解，您稍候可以線上搜尋此:",
-            228,
-            this.canvas.height - 160
-          );
-          this.canvas.ctx.fillText(
-            "情緒泥巴 0xMOODS_YKLM",
-            228,
-            this.canvas.height - 120
-          );
-          this.canvas.ctx.fillText(
-            "請訪問 " + process.env.MIX_APP_URL,
-            228,
-            this.canvas.height - 40
-          );
-          return;
-
         case "tumx453xqZLjf5kaFFBzNj4gqVXKWqXz":
           this.canvas.ctx.font = "36px " + this.canvas.font;
           this.canvas.ctx.fillStyle = this.canvas.color;
@@ -856,7 +832,7 @@ export default {
             this.canvas.height - 160
           );
           this.canvas.ctx.fillText(
-            "情緒泥巴 0xMOODS_YKLM",
+            "情緒泥巴 0xMOODS_YKLM " + this.hashtag.selector,
             228,
             this.canvas.height - 120
           );
@@ -867,19 +843,19 @@ export default {
           );
           return;
 
-        case "05326525f82b9a036e1bcb53a392ff7c":
-          this.canvas.ctx.font = "72px " + this.canvas.font;
-          this.canvas.ctx.fillStyle = this.canvas.color;
-          this.canvas.ctx.fillText("支離滅裂な", 360, this.canvas.height - 160);
-          this.canvas.ctx.fillText("思考・発言", 360, this.canvas.height - 80);
-          this.canvas.ctx.font = "36px " + this.canvas.font;
-          this.canvas.ctx.fillStyle = this.canvas.color;
-          this.canvas.ctx.fillText(
-            process.env.MIX_APP_NAME,
-            this.canvas.width - 232,
-            this.canvas.height - 24
-          );
-          return;
+        // case "05326525f82b9a036e1bcb53a392ff7c":
+        //   this.canvas.ctx.font = "72px " + this.canvas.font;
+        //   this.canvas.ctx.fillStyle = this.canvas.color;
+        //   this.canvas.ctx.fillText("支離滅裂な", 360, this.canvas.height - 160);
+        //   this.canvas.ctx.fillText("思考・発言", 360, this.canvas.height - 80);
+        //   this.canvas.ctx.font = "36px " + this.canvas.font;
+        //   this.canvas.ctx.fillStyle = this.canvas.color;
+        //   this.canvas.ctx.fillText(
+        //     process.env.MIX_APP_NAME,
+        //     this.canvas.width - 232,
+        //     this.canvas.height - 24
+        //   );
+        //   return;
 
         default:
           this.canvas.ctx.font = "36px " + this.canvas.font;
@@ -895,11 +871,6 @@ export default {
     drawingUrl() {
       switch (this.theme.selector) {
         case "32d2a897602ef652ed8e15d66128aa74":
-          this.canvas.ctx.font = "192px " + this.canvas.font;
-          this.canvas.ctx.fillStyle = this.canvas.color;
-          this.canvas.ctx.fillText(":(", 48, 192);
-          return;
-
         case "tumx453xqZLjf5kaFFBzNj4gqVXKWqXz":
           this.canvas.ctx.font = "192px " + this.canvas.font;
           this.canvas.ctx.fillStyle = this.canvas.color;
@@ -939,8 +910,6 @@ export default {
 
           switch (this.theme.selector) {
             case "32d2a897602ef652ed8e15d66128aa74":
-              y_point += 240;
-              break;
             case "tumx453xqZLjf5kaFFBzNj4gqVXKWqXz":
               y_point += 240;
               break;
